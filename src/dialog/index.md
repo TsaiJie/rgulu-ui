@@ -1,7 +1,6 @@
 
 ## dialog
-
-Demo:
+### 1
 
 ```tsx
 import React, { useState} from 'react';
@@ -22,3 +21,4 @@ export default () => (
       </Dialog>
     </div>);
 ```
+### 2
