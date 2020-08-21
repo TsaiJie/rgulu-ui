@@ -17765,7 +17765,8 @@
           -1 === e.indexOf('Mobile Safari') ||
           -1 !== e.indexOf('Chrome') ||
           -1 !== e.indexOf('Windows Phone')) &&
-        window.history && 'pushState' in window.history
+        window.history &&
+        'pushState' in window.history
       );
     }
     function _() {
@@ -25507,8 +25508,8 @@
             ? 0 === o.type
             : !r &&
               2 < t.length &&
-                ('o' === t[0] || 'O' === t[0]) &&
-                ('n' === t[1] || 'N' === t[1]);
+              ('o' === t[0] || 'O' === t[0]) &&
+              ('n' === t[1] || 'N' === t[1]);
       a ||
         (Y(t, n, o, r) && (n = null),
         r || null === o
@@ -28245,7 +28246,8 @@
           ? e.shouldComponentUpdate(r, a, i)
           : !t.prototype ||
             !t.prototype.isPureReactComponent ||
-            !no(n, r) || !no(o, a)
+            !no(n, r) ||
+            !no(o, a)
       );
     }
     function Ma(e, t, n) {
