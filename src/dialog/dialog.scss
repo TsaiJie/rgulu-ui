@@ -1,0 +1,57 @@
+
+.gulu-dialog {
+  position: fixed;
+  background: white;
+  min-width: 20em;
+  border-radius: 4px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  animation: Spread .3s;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  &-mask {position: fixed;top: 0;left: 0;height: 100%;width: 100%;
+    background: fade_out(black, 0.5);
+    z-index: 10;
+  }
+  &-header {
+    font-size: 22px;
+    padding: 8px 16px;
+    border-bottom: 1px #cccccc solid;
+  }
+  &-main {
+    min-height: 6em;
+  }
+  &-footer {
+    border-top: 1px solid #cccccc ;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  &-close {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: white;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    transform: translate(0%, 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+  }
+}
+@keyframes Spread {
+  0% {
+    opacity: 0;
+    // 之所以要再加translateY(-50%)，是为了防止动画抖动
+    transform: translate(-50%,-50%) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+  }
+}
