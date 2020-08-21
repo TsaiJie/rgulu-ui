@@ -49,7 +49,7 @@
     (n.o = function(e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
     }),
-    (n.p = '/'),
+    (n.p = '/rgulu-ui/'),
     n((n.s = 0));
 })({
   '+P9B': function(e, t, n) {
@@ -12903,7 +12903,7 @@
       });
     var r = n('k1fw'),
       o = n('YS25'),
-      a = { basename: '/' };
+      a = { basename: '/rgulu-ui' };
     window.routerBase && (a.basename = window.routerBase);
     var i = Object({ NODE_ENV: 'production' }).__IS_SERVER
         ? null

@@ -10,7 +10,7 @@ export default defineConfig({
   // more config: https://d.umijs.org/config
   // more config: https://d.umijs.org/config
   // git@github.com:<USERNAME>/<REPO>.git
-  base: 'git@github.com:TsaiJie/rgulu-ui.git/',
-  publicPath: 'git@github.com:TsaiJie/rgulu-ui.git/',
+  base: '/rgulu-ui',
+  publicPath: '/rgulu-ui/',
   exportStatic: {}, // 将所有路由输出为 HTML 目录结构，以免刷新页面时 404
 });
