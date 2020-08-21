@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import Dialog from './dialog';
 import {alert, confirm, modal} from './dialog';
+import { Button } from '@/index';
 
 
 const DialogExample: React.FunctionComponent = () => {
@@ -11,16 +12,16 @@ const DialogExample: React.FunctionComponent = () => {
   const openModal = () => {
     // 函数是延迟执行的
     // 函数操作组件内部返回的api 和 闭包很像
-    const close = modal(<h1>你好 <button onClick={() => {close();}}>close</button></h1>);
+    const close = modal(<h1>你好 <Button onClick={() => {close();}}>close</Button></h1>);
   };
   return (<Fragment>
     <div>
       <h2>example1</h2>
-      <button onClick={() => setX(!x)}>click</button>
+      <Button onClick={() => setX(!x)}>click</Button>
       <Dialog visible={x} buttons={
         [
-          <button onClick={() => setX(false)}>1</button>,
-          <button onClick={() => setX(false)}>2</button>
+          <Button onClick={() => setX(false)}>1</Button>,
+          <Button onClick={() => setX(false)}>2</Button>
         ]
 
       } onClose={() => {setX(false);}}>
@@ -29,11 +30,11 @@ const DialogExample: React.FunctionComponent = () => {
     </div>
     <div>
       <h2>example2</h2>
-      <button onClick={() => setY(!y)}>click</button>
+      <Button onClick={() => setY(!y)}>click</Button>
       <Dialog visible={y} buttons={
         [
-          <button onClick={() => setY(false)}>1</button>,
-          <button onClick={() => setY(false)}>2</button>
+          <Button onClick={() => setY(false)}>1</Button>,
+          <Button onClick={() => setY(false)}>2</Button>
         ]
 
       } onClose={() => {setY(false);}} clickMaskClose={true}>
@@ -42,28 +43,28 @@ const DialogExample: React.FunctionComponent = () => {
     </div>
     <div>
       <h2>example3--alert</h2>
-      <button onClick={() => alert('1')}>alert</button>
+      <Button onClick={() => alert('1')}>alert</Button>
     </div>
     <div>
       <h2>example4--confirm</h2>
-      <button onClick={() => confirm('1', () => {
+      <Button onClick={() => confirm('1', () => {
         console.log('你点击了yes');
       }, () => {
         console.log('你点击了no');
       })}>confirm
-      </button>
+      </Button>
     </div>
     <div>
       <h2>example5--modal</h2>
-      <button onClick={openModal}>modal</button>
+      <Button onClick={openModal}>modal</Button>
     </div>
     <div>
       <h2>example6</h2>
-      <button onClick={() => setZ(!z)}>click</button>
+      <Button onClick={() => setZ(!z)}>click</Button>
       <Dialog visible={z} buttons={
         [
-          <button onClick={() => setZ(false)}>1</button>,
-          <button onClick={() => setZ(false)}>2</button>
+          <Button onClick={() => setZ(false)}>1</Button>,
+          <Button onClick={() => setZ(false)}>2</Button>
         ]
 
       } onClose={() => {setZ(false);}} enableMask={false}>
