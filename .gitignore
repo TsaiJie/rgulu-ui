@@ -9,7 +9,7 @@
 /package-lock.json
 
 # production
-
+/dist
 # misc
 .DS_Store
 
