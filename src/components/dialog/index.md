@@ -1,4 +1,4 @@
-## dialog
+## Dialog
 
 ### 1 默认用法
 
