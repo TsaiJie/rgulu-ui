@@ -24,8 +24,15 @@
     }
   }
 }
-.menu-vertical {
+.gulu-menu-vertical {
   flex-direction: column;
-  border-bottom: 0px;
-  border-right: 1px solid  #40a9ff;
+  border-bottom: 0;
+  border-right: 1px solid  #cccccc;
+  .gulu-menu-item {
+    border-left: 2px solid transparent;
+    &.active, &:hover {
+      border-bottom: 0;
+      border-left: 2px solid #40a9ff;
+    }
+  }
 }

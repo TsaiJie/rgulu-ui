@@ -28,7 +28,6 @@ const Menu: React.FunctionComponent<Props> = props => {
   const classes = classNames(sc(''), className, {
     [sc('vertical')]: mode === 'vertical',
   });
-  console.log(mode);
   const handleClick = (index: number) => {
     setActive(index);
     onSelect && onSelect(index);

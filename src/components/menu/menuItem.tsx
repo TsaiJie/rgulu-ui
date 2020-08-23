@@ -19,7 +19,6 @@ const MenuItem: React.FunctionComponent<Props> = props => {
     disabled: disabled,
     active: context.index === index,
   });
-  console.log(disabled);
   const handleClick = () => {
     if (context.onSelect && !disabled) {
       context.onSelect(index);
