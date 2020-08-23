@@ -6,7 +6,7 @@ export default defineConfig({
   favicon:
     'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
   logo: 'https://avatars3.githubusercontent.com/u/46643419?s=60&v=4',
-  outputPath: 'doc',
+  outputPath: 'docs-dist',
   // more config: https://d.umijs.org/config
   base: '/rgulu-ui',
   publicPath: '/rgulu-ui/',
