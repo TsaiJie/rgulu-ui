@@ -44,6 +44,7 @@ interface Props {
   enableMask?: boolean;
   title?: React.ReactNode;
   titleStyle?: React.CSSProperties;
+  onCancel?: () => void;
 }
 
 const Dialog: React.FunctionComponent<Props> = props => {
@@ -55,12 +56,15 @@ const Dialog: React.FunctionComponent<Props> = props => {
     clickMaskClose,
     enableMask,
     title,
+    onCancel, //点击遮罩，或者键盘esc按键时的回调
   } = props;
   const onClickClose: React.MouseEventHandler = e => {
     onClose(e);
+    onCancel && onCancel();
   };
   const onClickMaskClose: React.MouseEventHandler = e => {
     clickMaskClose && onClose(e);
+    clickMaskClose && onCancel && onCancel();
   };
 
   // 挂载的时候获取 body 的padding和overflow
@@ -69,6 +73,7 @@ const Dialog: React.FunctionComponent<Props> = props => {
       if (e.key === 'Escape') {
         // @ts-ignore
         onClose(e);
+        onCancel && onCancel();
       }
     };
     // @ts-ignore

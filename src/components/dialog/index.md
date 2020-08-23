@@ -6,10 +6,13 @@
 import React, { useState } from 'react';
 import { Dialog, Button } from 'rgulu-ui';
 const [x, setX] = useState(false);
+
 export default () => (
   <div>
     <Button onClick={() => setX(!x)}>click</Button>
     <Dialog
+      //点击遮罩或者取消按钮，或者键盘esc按键时的回调
+      onCancel={() => alert('我是回掉函数')}
       visible={x}
       buttons={[
         <Button onClick={() => setX(false)}>取消</Button>,
