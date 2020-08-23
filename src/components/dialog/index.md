@@ -27,7 +27,39 @@ export default () => (
 );
 ```
 
-### 2 可以点击遮罩层进行关闭
+### 2 自定义 title
+
+```tsx
+import React, { useState } from 'react';
+import { Dialog, Button } from 'rgulu-ui';
+const [x, setX] = useState(false);
+export default () => (
+  <div>
+    <Button onClick={() => setX(!x)}>click</Button>
+    <Dialog
+      title={
+        <h3 style={{ padding: 0, margin: 0, color: 'pink' }}>
+          我是自定义title
+        </h3>
+      }
+      visible={x}
+      buttons={[
+        <Button onClick={() => setX(false)}>取消</Button>,
+        <Button level={'main'} onClick={() => setX(false)}>
+          确定
+        </Button>,
+      ]}
+      onClose={() => {
+        setX(false);
+      }}
+    >
+      <div>hi</div>
+    </Dialog>
+  </div>
+);
+```
+
+### 3 可以点击遮罩层进行关闭
 
 ```tsx
 import React, { useState } from 'react';
@@ -55,7 +87,7 @@ export default () => (
 );
 ```
 
-### 3 函数用法---alert
+### 4 函数用法---alert
 
 ```tsx
 import React, { useState } from 'react';
@@ -68,7 +100,7 @@ export default () => (
 );
 ```
 
-### 4 函数用法---confirm
+### 5 函数用法---confirm
 
 ```tsx
 import React, { useState } from 'react';
@@ -95,7 +127,7 @@ export default () => (
 );
 ```
 
-### 5 函数用法---modal
+### 6 函数用法---modal
 
 ```tsx
 import React, { useState } from 'react';

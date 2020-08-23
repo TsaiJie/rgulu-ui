@@ -29,6 +29,9 @@
     padding: 8px 16px;
     display: flex;
     justify-content: flex-end;
+    :first-child {
+      margin-right: 5px;
+    }
   }
   &-close {
     position: absolute;

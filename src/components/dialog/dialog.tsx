@@ -5,13 +5,6 @@ import ReactDOM from 'react-dom';
 import { scopedClassMaker } from '@/helper/classes';
 import { Button } from '@/index';
 
-interface Props {
-  visible: boolean;
-  buttons?: ReactElement[];
-  onClose: React.MouseEventHandler;
-  clickMaskClose?: boolean;
-  enableMask?: boolean;
-}
 let bodyPaddingRightGlobal = document.body.style.paddingRight;
 let bodyOverflowGlobal = document.body.style.overflow;
 
@@ -43,6 +36,16 @@ const hasScrollbar = () => {
   );
 };
 
+interface Props {
+  visible: boolean;
+  buttons?: ReactElement[];
+  onClose: React.MouseEventHandler;
+  clickMaskClose?: boolean;
+  enableMask?: boolean;
+  title?: React.ReactNode;
+  titleStyle?: React.CSSProperties;
+}
+
 const Dialog: React.FunctionComponent<Props> = props => {
   const {
     visible,
@@ -51,6 +54,7 @@ const Dialog: React.FunctionComponent<Props> = props => {
     onClose,
     clickMaskClose,
     enableMask,
+    title,
   } = props;
   const onClickClose: React.MouseEventHandler = e => {
     onClose(e);
@@ -94,7 +98,7 @@ const Dialog: React.FunctionComponent<Props> = props => {
         <div className={sc('close')} onClick={onClickClose}>
           <span />
         </div>
-        <header className={sc('header')}>提示</header>
+        <header className={sc('header')}>{title ? title : '提示'}</header>
         <main className={sc('main')}>{children}</main>
         {buttons && buttons.length > 0 && (
           <footer className={sc('footer')}>
