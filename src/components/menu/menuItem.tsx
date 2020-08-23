@@ -4,7 +4,7 @@ import { scopedClassMaker } from '@/helper/classes';
 import { MenuContext } from '@/components/menu/menu';
 
 export interface MenuItemProps {
-  index?: number;
+  index?: string;
   disabled?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -20,7 +20,7 @@ const MenuItem: React.FunctionComponent<MenuItemProps> = props => {
     active: context.index === index,
   });
   const handleClick = () => {
-    if (context.onSelect && !disabled && typeof index === 'number') {
+    if (context.onSelect && !disabled && typeof index === 'string') {
       context.onSelect(index);
     }
   };

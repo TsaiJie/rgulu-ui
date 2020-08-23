@@ -5,10 +5,10 @@ import { MenuItemProps } from './menuItem';
 import './menu.scss';
 
 type MenuMode = 'horizontal' | 'vertical';
-type SelectCallback = (selectedIndex: number) => void;
+type SelectCallback = (selectedIndex: string) => void;
 
 interface Props {
-  defaultIndex?: number;
+  defaultIndex?: string;
   className?: string;
   mode?: MenuMode;
   style?: React.CSSProperties;
@@ -16,12 +16,12 @@ interface Props {
 }
 // 需要传递的Context类型
 interface IMenuContext {
-  index: number;
+  index: string;
   onSelect?: SelectCallback;
   mode?: MenuMode;
 }
 // 创建context
-export const MenuContext = createContext<IMenuContext>({ index: 0 });
+export const MenuContext = createContext<IMenuContext>({ index: '0' });
 const scopedClass = scopedClassMaker('gulu-menu');
 const sc = scopedClass;
 
@@ -32,12 +32,12 @@ const Menu: React.FunctionComponent<Props> = props => {
     [sc('vertical')]: mode === 'vertical',
     [sc('horizontal')]: mode !== 'vertical',
   });
-  const handleClick = (index: number) => {
+  const handleClick = (index: string) => {
     setActive(index);
     onSelect && onSelect(index);
   };
   const passedContext: IMenuContext = {
-    index: currentActive ? currentActive : 0,
+    index: currentActive ? currentActive : '0',
     onSelect: handleClick,
     mode: mode,
   };
@@ -50,7 +50,7 @@ const Menu: React.FunctionComponent<Props> = props => {
       const { displayName } = childElement.type;
       if (displayName === 'MenuItem' || displayName === 'SubMenu') {
         return React.cloneElement(childElement, {
-          index,
+          index: index.toString(),
         });
       } else {
         console.warn('Menu 的子元素至少有一个不是 MenuItem 或者 SubMenu');
@@ -69,6 +69,6 @@ const Menu: React.FunctionComponent<Props> = props => {
 export default Menu;
 
 Menu.defaultProps = {
-  defaultIndex: 0,
+  defaultIndex: '0',
   mode: 'horizontal',
 };

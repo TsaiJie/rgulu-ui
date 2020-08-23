@@ -4,7 +4,7 @@ import { MenuContext } from '@/components/menu/menu';
 import { MenuItemProps } from '@/components/menu/menuItem';
 
 export interface SubMenuProps {
-  index?: number;
+  index?: string;
   title: string;
   className?: string;
 }
@@ -44,7 +44,9 @@ const SubMenu: React.FunctionComponent<SubMenuProps> = props => {
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>;
       if (childElement.type.displayName === 'MenuItem') {
-        return childElement;
+        return React.cloneElement(childElement, {
+          index: `${index}-${i}`,
+        });
       } else {
         console.warn('SubMenu 的子元素至少有一个不是 MenuItem');
       }

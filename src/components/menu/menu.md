@@ -7,7 +7,7 @@ import { Menu, MenuItem } from 'rgulu-ui';
 export default () => (
   <div>
     <Menu
-      defaultIndex={2}
+      defaultIndex={'2'}
       onSelect={index => {
         console.log(index);
       }}
@@ -28,7 +28,7 @@ export default () => (
   <div>
     <Menu
       mode={'vertical'}
-      defaultIndex={2}
+      defaultIndex={'2'}
       onSelect={index => {
         console.log(index);
       }}
@@ -48,7 +48,7 @@ import { Menu, MenuItem, SubMenu } from 'rgulu-ui';
 export default () => (
   <div>
     <Menu
-      defaultIndex={2}
+      defaultIndex={'2'}
       onSelect={index => {
         console.log(index);
       }}
@@ -73,7 +73,7 @@ export default () => (
   <div>
     <Menu
       mode={'vertical'}
-      defaultIndex={2}
+      defaultIndex={'2'}
       onSelect={index => {
         console.log(index);
       }}
