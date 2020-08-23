@@ -1,7 +1,9 @@
 import React, { createContext, useState } from 'react';
 import classNames from 'classnames';
 import { scopedClassMaker } from '@/helper/classes';
+import { MenuItemProps } from './menuItem';
 import './menu.scss';
+
 type MenuMode = 'horizontal' | 'vertical';
 type SelectCallback = (selectedIndex: number) => void;
 
@@ -36,10 +38,24 @@ const Menu: React.FunctionComponent<Props> = props => {
     index: currentActive ? currentActive : 0,
     onSelect: handleClick,
   };
+  // 判读哪些子元素不是MenuItem
+  const renderChildren = () => {
+    return React.Children.map(children, (child, index) => {
+      const childElement = child as React.FunctionComponentElement<
+        MenuItemProps
+      >;
+      const { displayName } = childElement.type;
+      if (displayName === 'MenuItem') {
+        return child;
+      } else {
+        console.warn('Menu 的子元素有一个不是 MenuItem');
+      }
+    });
+  };
   return (
     <ul className={classes} style={style}>
       <MenuContext.Provider value={passedContext}>
-        {children}
+        {renderChildren()}
       </MenuContext.Provider>
     </ul>
   );

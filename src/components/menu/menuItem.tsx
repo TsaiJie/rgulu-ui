@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { scopedClassMaker } from '@/helper/classes';
 import { MenuContext } from '@/components/menu/menu';
 
-export interface Props {
+export interface MenuItemProps {
   index: number;
   disabled?: boolean;
   className?: string;
@@ -12,7 +12,7 @@ export interface Props {
 
 const scopedClass = scopedClassMaker('gulu-menu-item');
 const sc = scopedClass;
-const MenuItem: React.FunctionComponent<Props> = props => {
+const MenuItem: React.FunctionComponent<MenuItemProps> = props => {
   const { index, disabled, className, style, children } = props;
   const context = useContext(MenuContext);
   const classes = classNames(sc(''), className, {
@@ -30,4 +30,5 @@ const MenuItem: React.FunctionComponent<Props> = props => {
     </li>
   );
 };
+MenuItem.displayName = 'MenuItem';
 export default MenuItem;
