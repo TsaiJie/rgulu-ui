@@ -29,24 +29,29 @@
     padding: 8px 16px;
     display: flex;
     justify-content: flex-end;
-    :first-child {
+    button:first-child {
       margin-right: 5px;
     }
   }
   &-close {
     position: absolute;
     bottom: 100%;
-    right: 0;
+    right: 10px;
     background: white;
     width: 1.5em;
     height: 1.5em;
     border-radius: 50%;
-    transform: translate(0%, 50%);
+    transform: translateY(150%);
     display: flex;
     justify-content: center;
     align-items: center;
     color: black;
     cursor: pointer;
+    transition: all 150ms linear;
+    &:hover {
+      background: #db4e2b;
+      color: white;
+    }
   }
 }
 @keyframes Spread {

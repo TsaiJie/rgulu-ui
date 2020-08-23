@@ -101,7 +101,7 @@ const Dialog: React.FunctionComponent<Props> = props => {
       {enableMask && <div className={sc('mask')} onClick={onClickMaskClose} />}
       <div className={sc('')}>
         <div className={sc('close')} onClick={onClickClose}>
-          <span />
+          <span>X</span>
         </div>
         <header className={sc('header')}>{title ? title : '提示'}</header>
         <main className={sc('main')}>{children}</main>
