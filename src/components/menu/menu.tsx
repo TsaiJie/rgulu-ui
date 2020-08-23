@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import classNames from 'classnames';
 import { scopedClassMaker } from '@/helper/classes';
-
+import './menu.scss';
 type MenuMode = 'horizontal' | 'vertical';
 type SelectCallback = (selectedIndex: number) => void;
 
@@ -28,6 +28,7 @@ const Menu: React.FunctionComponent<Props> = props => {
   const classes = classNames(sc(''), className, {
     [sc('vertical')]: mode === 'vertical',
   });
+  console.log(mode);
   const handleClick = (index: number) => {
     setActive(index);
     onSelect && onSelect(index);
