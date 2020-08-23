@@ -13,7 +13,9 @@ export default () => (
       visible={x}
       buttons={[
         <Button onClick={() => setX(false)}>取消</Button>,
-        <Button onClick={() => setX(false)}>确定</Button>,
+        <Button level={'main'} onClick={() => setX(false)}>
+          确定
+        </Button>,
       ]}
       onClose={() => {
         setX(false);
@@ -38,7 +40,9 @@ export default () => (
       visible={x}
       buttons={[
         <Button onClick={() => setX(false)}>取消</Button>,
-        <Button onClick={() => setX(false)}>确定</Button>,
+        <Button level={'main'} onClick={() => setX(false)}>
+          确定
+        </Button>,
       ]}
       onClose={() => {
         setX(false);

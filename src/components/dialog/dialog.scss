@@ -4,23 +4,25 @@
   background: white;
   min-width: 20em;
   border-radius: 4px;
-  top: 50%;
+  top: 100px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 11;
+  transform: translateX(-50%);
+  z-index: 101;
   animation: Spread .3s;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  width: 480px;
   &-mask {position: fixed;top: 0;left: 0;height: 100%;width: 100%;
     background: fade_out(black, 0.5);
-    z-index: 10;
+    z-index: 100;
   }
   &-header {
-    font-size: 22px;
+    font-size: 16px;
     padding: 8px 16px;
     border-bottom: 1px #cccccc solid;
   }
   &-main {
     min-height: 6em;
+    padding: 16px;
   }
   &-footer {
     border-top: 1px solid #cccccc ;
@@ -48,10 +50,10 @@
   0% {
     opacity: 0;
     // 之所以要再加translateY(-50%)，是为了防止动画抖动
-    transform: translate(-50%,-50%) scale(0);
+    transform: translateX(-50%) scale(0);
   }
   100% {
     opacity: 1;
-    transform: translate(-50%,-50%) scale(1);
+    transform: translateX(-50%) scale(1);
   }
 }

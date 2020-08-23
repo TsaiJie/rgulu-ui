@@ -164,8 +164,10 @@ const confirm = (content: string, yes?: () => void, no?: () => void) => {
     no && no();
   };
   const buttons = [
-    <Button onClick={onYes}>yes</Button>,
-    <Button onClick={onNo}>no</Button>,
+    <Button onClick={onNo}>取消</Button>,
+    <Button level={'main'} onClick={onYes}>
+      确定
+    </Button>,
   ];
   const close = modal(content, buttons, no);
 };
