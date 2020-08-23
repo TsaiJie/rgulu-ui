@@ -696,7 +696,7 @@
                 o.a.createElement(
                   'div',
                   { className: f('close'), onClick: g },
-                  o.a.createElement('span', null),
+                  o.a.createElement('span', null, 'X'),
                 ),
                 o.a.createElement(
                   'header',
