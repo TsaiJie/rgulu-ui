@@ -13,12 +13,14 @@ interface Props {
   mode?: MenuMode;
   style?: React.CSSProperties;
   onSelect?: SelectCallback;
+  defaultOpenSubMenus?: string[];
 }
 // 需要传递的Context类型
 interface IMenuContext {
   index: string;
   onSelect?: SelectCallback;
   mode?: MenuMode;
+  defaultOpenSubMenus?: string[];
 }
 // 创建context
 export const MenuContext = createContext<IMenuContext>({ index: '0' });
@@ -26,7 +28,15 @@ const scopedClass = scopedClassMaker('gulu-menu');
 const sc = scopedClass;
 
 const Menu: React.FunctionComponent<Props> = props => {
-  const { className, mode, style, children, defaultIndex, onSelect } = props;
+  const {
+    className,
+    mode,
+    style,
+    children,
+    defaultIndex,
+    onSelect,
+    defaultOpenSubMenus,
+  } = props;
   const [currentActive, setActive] = useState(defaultIndex);
   const classes = classNames(sc(''), className, {
     [sc('vertical')]: mode === 'vertical',
@@ -39,7 +49,8 @@ const Menu: React.FunctionComponent<Props> = props => {
   const passedContext: IMenuContext = {
     index: currentActive ? currentActive : '0',
     onSelect: handleClick,
-    mode: mode,
+    mode,
+    defaultOpenSubMenus,
   };
   // 判读哪些子元素不是MenuItem
   const renderChildren = () => {
@@ -71,4 +82,5 @@ export default Menu;
 Menu.defaultProps = {
   defaultIndex: '0',
   mode: 'horizontal',
+  defaultOpenSubMenus: [],
 };

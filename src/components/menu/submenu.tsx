@@ -11,8 +11,13 @@ export interface SubMenuProps {
 
 const SubMenu: React.FunctionComponent<SubMenuProps> = props => {
   const { index, title, children, className } = props;
-  const [menuOpen, setOpen] = useState(false);
   const context = useContext(MenuContext);
+  const openedSubMenus = context.defaultOpenSubMenus as Array<string>;
+  const isOpened =
+    index && context.mode === 'vertical'
+      ? openedSubMenus.includes(index)
+      : false;
+  const [menuOpen, setOpen] = useState(isOpened);
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setOpen(!menuOpen);
