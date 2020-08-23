@@ -24,7 +24,6 @@ const Layout: React.FunctionComponent<Props> = props => {
     childrenAsArray.reduce((result, node) => {
       return result || node.type === Aside;
     }, false);
-  console.log(hasAside);
   return (
     <div className={sc({ '': true, hasAside }, { extra: className })} {...rest}>
       {children}
@@ -32,8 +31,3 @@ const Layout: React.FunctionComponent<Props> = props => {
   );
 };
 export default Layout;
-export { Layout };
-export { default as Header } from './header';
-export { default as Content } from './content';
-export { default as Footer } from './footer';
-export { default as Aside } from './aside';
