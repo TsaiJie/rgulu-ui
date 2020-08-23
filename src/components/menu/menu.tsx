@@ -18,6 +18,7 @@ interface Props {
 interface IMenuContext {
   index: number;
   onSelect?: SelectCallback;
+  mode?: MenuMode;
 }
 // 创建context
 export const MenuContext = createContext<IMenuContext>({ index: 0 });
@@ -38,6 +39,7 @@ const Menu: React.FunctionComponent<Props> = props => {
   const passedContext: IMenuContext = {
     index: currentActive ? currentActive : 0,
     onSelect: handleClick,
+    mode: mode,
   };
   // 判读哪些子元素不是MenuItem
   const renderChildren = () => {
