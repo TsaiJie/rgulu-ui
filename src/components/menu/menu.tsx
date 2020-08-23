@@ -29,6 +29,7 @@ const Menu: React.FunctionComponent<Props> = props => {
   const [currentActive, setActive] = useState(defaultIndex);
   const classes = classNames(sc(''), className, {
     [sc('vertical')]: mode === 'vertical',
+    [sc('horizontal')]: mode !== 'vertical',
   });
   const handleClick = (index: number) => {
     setActive(index);
@@ -45,12 +46,12 @@ const Menu: React.FunctionComponent<Props> = props => {
         MenuItemProps
       >;
       const { displayName } = childElement.type;
-      if (displayName === 'MenuItem') {
+      if (displayName === 'MenuItem' || displayName === 'SubMenu') {
         return React.cloneElement(childElement, {
           index,
         });
       } else {
-        console.warn('Menu 的子元素有一个不是 MenuItem');
+        console.warn('Menu 的子元素至少有一个不是 MenuItem 或者 SubMenu');
       }
     });
   };

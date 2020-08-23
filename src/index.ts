@@ -8,3 +8,4 @@ export { default as Footer } from './components/layout/footer';
 export { default as Header } from './components/layout/header';
 export { default as Menu } from './components/menu/menu';
 export { default as MenuItem } from './components/menu/menuItem';
+export { default as SubMenu } from './components/menu/submenu';

@@ -1,15 +1,18 @@
+$menu-item-active-color: #40a9ff;
+$menu-transition: color .15s ease-in-out, border-color .15s ease-in-out;
 .gulu-menu {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
   margin-bottom: 30px;
   list-style: none;
+  color: #212529;
   border-bottom: 1px solid #cccccc;
   box-shadow: inset 0 1px 0 rgba(white, .15), 0 1px 1px rgba(black, .075);
-  .gulu-menu-item {
+  > .gulu-menu-item {
     padding: 8px;
     cursor: pointer;
-    transition: color .15s ease-in-out, border-color .15s ease-in-out;
+    transition: $menu-transition;
     &:hover, &:focus {
       text-decoration: none;
     }
@@ -19,20 +22,59 @@
       cursor: default;
     }
     &.active, &:hover {
-      color: #40a9ff;
-      border-bottom: 2px solid #40a9ff;
+      color: $menu-item-active-color;
+      border-bottom: 2px solid $menu-item-active-color;
     }
+  }
+  .gulu-submenu-item {
+    position: relative;
+    .gulu-submenu-title {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .gulu-submenu {
+    //display: none;
+    list-style: none;
+    padding-left: 0;
+    white-space: nowrap;
+    //transition: $menu-transition;
+    .gulu-menu-item {
+      padding: 10px;
+      cursor: pointer;
+      transition: $menu-transition;
+      color: #212529;
+      &.active, &:hover {
+        color: $menu-item-active-color;
+      }
+    }
+  }
+}
+.gulu-menu-horizontal {
+  > .gulu-menu-item {
+    border-bottom: 2px solid transparent;
+  }
+  .gulu-submenu {
+    position: absolute;
+    background: white;
+    z-index: 100;
+    top: calc(100% + 8px);
+    left: 0;
+    border: 1px solid #cccccc;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
   }
 }
 .gulu-menu-vertical {
   flex-direction: column;
   border-bottom: 0;
-  border-right: 1px solid  #cccccc;
-  .gulu-menu-item {
+  margin: 10px 20px;
+  border-right: 1px solid #cccccc;
+  > .gulu-menu-item {
     border-left: 2px solid transparent;
+    border-bottom: 0;
     &.active, &:hover {
       border-bottom: 0;
-      border-left: 2px solid #40a9ff;
+      border-left: 2px solid $menu-item-active-color;
     }
   }
 }
