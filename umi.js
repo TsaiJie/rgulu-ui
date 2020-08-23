@@ -33905,7 +33905,7 @@
               exact: !0,
               meta: {
                 filePath: 'docs/index.md',
-                updatedTime: 1598027333e3,
+                updatedTime: 1598154397e3,
                 slugs: [
                   {
                     depth: 1,
