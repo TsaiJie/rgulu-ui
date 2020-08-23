@@ -12,11 +12,9 @@ export default () => (
         console.log(index);
       }}
     >
-      <MenuItem index={0}>cool link</MenuItem>
-      <MenuItem index={1} disabled>
-        cool link1
-      </MenuItem>
-      <MenuItem index={2}>cool link2</MenuItem>
+      <MenuItem>cool link</MenuItem>
+      <MenuItem disabled>cool link1</MenuItem>
+      <MenuItem>cool link2</MenuItem>
     </Menu>
   </div>
 );

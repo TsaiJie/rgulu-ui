@@ -46,7 +46,9 @@ const Menu: React.FunctionComponent<Props> = props => {
       >;
       const { displayName } = childElement.type;
       if (displayName === 'MenuItem') {
-        return child;
+        return React.cloneElement(childElement, {
+          index,
+        });
       } else {
         console.warn('Menu 的子元素有一个不是 MenuItem');
       }
