@@ -44,11 +44,10 @@ $menu-transition: color .15s ease-in-out, border-color .15s ease-in-out;
     }
   }
   .gulu-submenu {
-    display: none;
+    //display: none;
     list-style: none;
     padding-left: 0;
     white-space: nowrap;
-    //transition: $menu-transition;
     .gulu-menu-item {
       padding: 10px;
       cursor: pointer;
@@ -71,7 +70,7 @@ $menu-transition: color .15s ease-in-out, border-color .15s ease-in-out;
   }
   // 只要有这两个类就可以让他显示出来
   .gulu-submenu.menu-opened {
-    display: block;
+    //display: block;
   }
 }
 

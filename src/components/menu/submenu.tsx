@@ -62,6 +62,7 @@ const SubMenu: React.FunctionComponent<SubMenuProps> = props => {
     });
     return (
       <CSSTransition
+        unmountOnExit
         in={menuOpen}
         timeout={300}
         classNames="zoom-in-top"
