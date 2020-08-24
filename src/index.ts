@@ -10,3 +10,7 @@ export { default as Menu } from './components/menu/menu';
 export { default as MenuItem } from './components/menu/menuItem';
 export { default as SubMenu } from './components/menu/submenu';
 export { default as Icon } from './components/icon/icon';
+export { default as Transition } from './components/transition/transition';
+import './components/variable.scss';
+import './components/mixin.scss';
+import './components/animation.scss';

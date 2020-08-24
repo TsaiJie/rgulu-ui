@@ -8,16 +8,19 @@ type AnimationName =
   | 'zoom-in-right'
   | 'zoom-in-bottom';
 
-type TransitionProps = { animation?: AnimationName } & CSSTransitionProps;
+type TransitionProps = {
+  animation?: AnimationName;
+  wrapper?: boolean;
+} & CSSTransitionProps;
 
 const Transition: React.FunctionComponent<TransitionProps> = props => {
-  const { children, classNames, animation, ...restProps } = props;
+  const { children, classNames, animation, wrapper, ...restProps } = props;
   return (
     <CSSTransition
       classNames={classNames ? classNames : animation}
       {...restProps}
     >
-      {children}
+      {wrapper ? <div>{children}</div> : children}
     </CSSTransition>
   );
 };
