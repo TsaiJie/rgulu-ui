@@ -6,10 +6,6 @@
 
 `TypeScript`提供了静态类型检查。`rgulu-ui` 完全使用 `TypeScript` 编写，有效增强了代码的健壮性。
 
-## 很少的额外依赖
-
-`rgulu-ui` 只依赖 `React`、`ReactDOM` 两个核心库以及 `classnames` ，没有其他外部依赖。
-
 ## 全部使用函数实现
 
 `rgulu-ui` 所有组件都是使用的函数式组件。

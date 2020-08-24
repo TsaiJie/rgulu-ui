@@ -1,5 +1,7 @@
 ## Icon
 
+基于 FontAwesomeIcon 做的 Icon
+
 ```tsx
 import React from 'react';
 import { Icon } from 'rgulu-ui';
