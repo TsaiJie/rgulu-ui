@@ -9,3 +9,4 @@ export { default as Header } from './components/layout/header';
 export { default as Menu } from './components/menu/menu';
 export { default as MenuItem } from './components/menu/menuItem';
 export { default as SubMenu } from './components/menu/submenu';
+export { default as Icon } from './components/icon/icon';
