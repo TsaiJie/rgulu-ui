@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { MenuContext } from '@/components/menu/menu';
 import { MenuItemProps } from '@/components/menu/menuItem';
 import { Icon } from '@/index';
+import { CSSTransition } from 'react-transition-group';
 
 export interface SubMenuProps {
   index?: string;
@@ -59,7 +60,16 @@ const SubMenu: React.FunctionComponent<SubMenuProps> = props => {
         console.warn('SubMenu 的子元素至少有一个不是 MenuItem');
       }
     });
-    return <ul className={subMenuClasses}>{childrenComponent}</ul>;
+    return (
+      <CSSTransition
+        in={menuOpen}
+        timeout={300}
+        classNames="zoom-in-top"
+        appear
+      >
+        <ul className={subMenuClasses}>{childrenComponent}</ul>
+      </CSSTransition>
+    );
   };
   return (
     <li key={index} className={classes} {...hoverEvents}>
