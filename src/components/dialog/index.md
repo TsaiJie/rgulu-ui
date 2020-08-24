@@ -102,14 +102,12 @@ export default () => {
 
 ```tsx
 import React, { useState } from 'react';
-export default () => {
-  const [x, setX] = useState(false);
-  return (
-    <div>
-      <Button onClick={() => alert('1')}>alert</Button>
-    </div>
-  );
-};
+import { Dialog, alert, Button } from 'rgulu-ui';
+export default () => (
+  <div>
+    <Button onClick={() => alert('1')}>alert</Button>
+  </div>
+);
 ```
 
 ### 5 函数用法---confirm
@@ -117,28 +115,25 @@ export default () => {
 ```tsx
 import React, { useState } from 'react';
 import { Dialog, confirm, Button } from 'rgulu-ui';
-
-export default () => {
-  return (
-    <div>
-      <Button
-        onClick={() =>
-          confirm(
-            '我是文本',
-            () => {
-              console.log('你点击了yes');
-            },
-            () => {
-              console.log('你点击了no');
-            },
-          )
-        }
-      >
-        confirm
-      </Button>
-    </div>
-  );
-};
+export default () => (
+  <div>
+    <Button
+      onClick={() =>
+        confirm(
+          '我是文本',
+          () => {
+            console.log('你点击了yes');
+          },
+          () => {
+            console.log('你点击了no');
+          },
+        )
+      }
+    >
+      confirm
+    </Button>
+  </div>
+);
 ```
 
 ### 6 函数用法---modal
