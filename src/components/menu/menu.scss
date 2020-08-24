@@ -32,6 +32,15 @@ $menu-transition: color .15s ease-in-out, border-color .15s ease-in-out;
       display: flex;
       align-items: center;
     }
+    .gulu-arrow-icon {
+      transition: transform .25s ease-in-out;
+      margin-left: 3px;
+    }
+    &:hover {
+      .gulu-arrow-icon {
+        transform: rotate(180deg);
+      }
+    }
   }
   .gulu-submenu {
     display: none;
@@ -49,11 +58,23 @@ $menu-transition: color .15s ease-in-out, border-color .15s ease-in-out;
       }
     }
   }
+  .is-vertical {
+    .gulu-arrow-icon {
+      transform: rotate(0deg) !important;
+    }
+  }
+  .is-vertical.is-opened {
+    .gulu-arrow-icon {
+      transform: rotate(180deg) !important;
+    }
+  }
   // 只要有这两个类就可以让他显示出来
   .gulu-submenu.menu-opened {
     display: block;
   }
 }
+
+
 .gulu-menu-horizontal {
   > .gulu-menu-item {
     border-bottom: 2px solid transparent;
