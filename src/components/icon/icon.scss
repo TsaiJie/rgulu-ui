@@ -1,0 +1,6 @@
+@import "src/components/variable";
+@each $key, $val in $theme-colors {
+  .gulu-icon-#{$key} {
+    color: $val;
+  }
+}

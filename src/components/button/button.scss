@@ -1,11 +1,8 @@
+@import "src/components/variable";
 $h: 32px;
 $border-color: #d9d9d9;
 $color: #333;
-$blue: #40a9ff;
 $radius: 4px;
-$red: #db4e2b;
-$waring: #f4af4f;
-$success: #6ec88e;
 $grey: gray;
 .gulu-button {
   position: relative;
@@ -25,10 +22,10 @@ $grey: gray;
   padding: 0 15px;
   &:hover,
   &:focus {
-    color: $blue;
-    border-color: $blue;
+    color: $main;
+    border-color: $main;
     > .gulu-loadingIndicator {
-      border-color: $blue $blue $blue transparent;
+      border-color: $main $main $main transparent;
     }
   }
   &:focus {
@@ -40,10 +37,10 @@ $grey: gray;
     display: inline-block;
     border-color: transparent;
     box-shadow: none;
-    color: $blue;
+    color: $main;
     text-decoration: none;
     &:hover, &:focus {
-      color: lighten($blue, 10%);
+      color: lighten($main, 10%);
     }
     &.gulu-size-big {
       font-size: 24px;
@@ -96,42 +93,42 @@ $grey: gray;
       transition: 0s;
     }
     &.gulu-level-main {
-      background: $blue;
+      background: $main;
       color: white;
-      border-color: $blue;
+      border-color: $main;
       > .gulu-loadingIndicator {
         border-color: white white white transparent;
       }
       &:hover,
       &:focus {
-        background: darken($blue, 10%);
-        border-color: darken($blue, 10%);
+        background: darken($main, 10%);
+        border-color: darken($main, 10%);
       }
     }
     &.gulu-level-danger {
-      background: $red;
-      border-color: $red;
+      background: $danger;
+      border-color: $danger;
       color: white;
       > .gulu-loadingIndicator {
         border-color: white white white transparent;
       }
       &:hover,
       &:focus {
-        background: darken($red, 10%);
-        border-color: darken($red, 10%);
+        background: darken($danger, 10%);
+        border-color: darken($danger, 10%);
       }
     }
     &.gulu-level-waring {
       > .gulu-loadingIndicator {
         border-color: white white white transparent;
       }
-      background: $waring;
-      border-color: $waring;
+      background: $warning;
+      border-color: $warning;
       color: white;
       &:hover,
       &:focus {
-        background: darken($waring, 10%);
-        border-color: darken($waring, 10%);
+        background: darken($warning, 10%);
+        border-color: darken($warning, 10%);
       }
     }
     &.gulu-level-success {
@@ -150,17 +147,17 @@ $grey: gray;
   }
   &.gulu-theme-link {
     &.gulu-level-danger {
-      color: $red;
+      color: $danger;
       &:hover,
       &:focus {
-        color: darken($red, 10%);
+        color: darken($danger, 10%);
       }
     }
     &.gulu-level-waring {
-      color: $waring;
+      color: $warning;
       &:hover,
       &:focus {
-        color: darken($waring, 10%);
+        color: darken($warning, 10%);
       }
     }
     &.gulu-level-success {
@@ -178,24 +175,24 @@ $grey: gray;
       transition: 0s;
     }
     &.gulu-level-main {
-      color: $blue;
+      color: $main;
       &:hover,
       &:focus {
-        color: darken($blue, 10%);
+        color: darken($main, 10%);
       }
     }
     &.gulu-level-danger {
-      color: $red;
+      color: $danger;
       &:hover,
       &:focus {
-        color: darken($red, 10%);
+        color: darken($danger, 10%);
       }
     }
     &.gulu-level-waring {
-      color: $waring;
+      color: $warning;
       &:hover,
       &:focus {
-        color: darken($waring, 10%);
+        color: darken($warning, 10%);
       }
     }
     &.gulu-level-success {

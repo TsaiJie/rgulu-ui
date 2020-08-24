@@ -6,9 +6,11 @@ import {
 import { library } from '@fortawesome/fontawesome-svg-core';
 // 引入所有图标
 import { fas } from '@fortawesome/free-solid-svg-icons';
+// 添加所有图标
+library.add(fas);
 import classNames from 'classnames';
 import { scopedClassMaker } from '@/helper/classes';
-library.add(fas);
+import './icon.scss';
 type ThemeProps = 'main' | 'danger' | 'success' | 'warning';
 
 interface IconProps extends FontAwesomeIconProps {
