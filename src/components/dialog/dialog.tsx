@@ -1,15 +1,27 @@
 import React, { Fragment, ReactElement, ReactNode, useEffect } from 'react';
+import '@/components/index.scss';
 import './dialog.scss';
 
 import ReactDOM from 'react-dom';
 import { scopedClassMaker } from '@/helper/classes';
 import { Button } from '@/index';
-
+interface Props {
+  visible: boolean;
+  buttons?: ReactElement[];
+  onClose: React.MouseEventHandler;
+  clickMaskClose?: boolean;
+  enableMask?: boolean;
+  title?: React.ReactNode;
+  titleStyle?: React.CSSProperties;
+  onCancel?: () => void;
+}
+// 记录下来本来paddingRight以及overflow
 let bodyPaddingRightGlobal = document.body.style.paddingRight;
 let bodyOverflowGlobal = document.body.style.overflow;
 
 const scopedClass = scopedClassMaker('gulu-dialog');
 const sc = scopedClass;
+// 获得滚动条的宽度
 const getScrollBarWidth = () => {
   const outer = document.createElement('div');
   outer.style.width = '100px';
@@ -35,17 +47,6 @@ const hasScrollbar = () => {
     (window.innerHeight || document.documentElement.clientHeight)
   );
 };
-
-interface Props {
-  visible: boolean;
-  buttons?: ReactElement[];
-  onClose: React.MouseEventHandler;
-  clickMaskClose?: boolean;
-  enableMask?: boolean;
-  title?: React.ReactNode;
-  titleStyle?: React.CSSProperties;
-  onCancel?: () => void;
-}
 
 const Dialog: React.FunctionComponent<Props> = props => {
   const {
@@ -86,11 +87,13 @@ const Dialog: React.FunctionComponent<Props> = props => {
   }, []);
   // 隐藏滚动条
   useEffect(() => {
+    // 判断是否有滚动条
     if (visible && hasScrollbar()) {
+      // 有滚动条的话就把滚动条向右移动，移除页面
       document.body.style.paddingRight = getScrollBarWidth() + 'px';
       document.body.style.overflow = 'hidden';
-      console.log('执行了');
     } else {
+      // 没有滚动条的话就直接赋为初始值
       document.body.style.paddingRight = bodyPaddingRightGlobal;
       document.body.style.overflow = bodyOverflowGlobal;
     }
@@ -98,7 +101,9 @@ const Dialog: React.FunctionComponent<Props> = props => {
 
   const dialog = visible ? (
     <Fragment>
+      {/* 遮罩层 */}
       {enableMask && <div className={sc('mask')} onClick={onClickMaskClose} />}
+      {/* dialog真实的内容 */}
       <div className={sc('')}>
         <div className={sc('close')} onClick={onClickClose}>
           <span>X</span>
@@ -117,8 +122,8 @@ const Dialog: React.FunctionComponent<Props> = props => {
       </div>
     </Fragment>
   ) : null;
-
   // 必须返回一个null或者组件children有可能是组件也可能不是组件
+  // 把dialog挂载到body上
   return ReactDOM.createPortal(dialog, document.body);
 };
 Dialog.defaultProps = {
@@ -134,6 +139,7 @@ const modal = (
     document.body.style.paddingRight = bodyPaddingRightGlobal;
     document.body.style.overflow = bodyOverflowGlobal;
     // 把 component 复制一份儿 visible变为false，重新新渲染
+    // 也可以直接卸载
     ReactDOM.render(React.cloneElement(component, { visible: false }), div);
     // 把div从reactDom卸载
     ReactDOM.unmountComponentAtNode(div);
@@ -155,6 +161,7 @@ const modal = (
   const div = document.createElement('div');
   document.body.append(div);
   ReactDOM.render(component, div);
+  // 以供外面可以控制
   return onClose;
 };
 

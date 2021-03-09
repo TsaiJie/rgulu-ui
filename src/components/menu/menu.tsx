@@ -52,7 +52,7 @@ const Menu: React.FunctionComponent<Props> = props => {
     mode,
     defaultOpenSubMenus,
   };
-  // 判读哪些子元素不是MenuItem
+  // 判读哪些子元素不是MenuItem和SubMenu
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
       const childElement = child as React.FunctionComponentElement<

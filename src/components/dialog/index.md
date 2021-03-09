@@ -25,7 +25,11 @@ export default () => {
           setX(false);
         }}
       >
-        <div>hi</div>
+        <div>
+          <p>content</p>
+          <p>content</p>
+          <p>content</p>
+        </div>
       </Dialog>
     </div>
   );
@@ -144,9 +148,10 @@ import { Dialog, modal, Button } from 'rgulu-ui';
 const openModal = () => {
   // 函数是延迟执行的
   // 函数操作组件内部返回的api 和 闭包很像
+
   const close = modal(
     <h1>
-      你好{' '}
+      你好
       <Button
         onClick={() => {
           close();
