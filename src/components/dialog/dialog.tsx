@@ -1,7 +1,10 @@
 import React, { Fragment, ReactElement, ReactNode, useEffect } from 'react';
 import '@/components/index.scss';
 import './dialog.scss';
-
+/**
+ * 1 scoped
+ *
+ */
 import ReactDOM from 'react-dom';
 import { scopedClassMaker } from '@/helper/classes';
 import { Button } from '@/index';

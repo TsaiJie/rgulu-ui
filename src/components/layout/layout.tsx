@@ -19,6 +19,7 @@ const Layout: React.FunctionComponent<Props> = props => {
   //   }
   // });
   const childrenAsArray = children as ReactElement[];
+  //  false || true => true, 只要中间有一个true就为 true
   const hasAside =
     'length' in childrenAsArray &&
     childrenAsArray.reduce((result, node) => {
