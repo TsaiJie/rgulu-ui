@@ -14,6 +14,7 @@ interface Props {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onChange: (value: FormValue) => void;
   errors: { [K: string]: string[] };
+  errorsDisplayMode: 'first' | 'all';
 }
 
 const scopedClass = scopedClassMaker('gulu-form');
@@ -28,28 +29,48 @@ const Form: React.FunctionComponent<Props> = props => {
     const newFormValue = { ...formData, [name]: value };
     props.onChange(newFormValue);
   };
+  const errorsDisplay = (errors: string[] | undefined) => {
+    console.log(errors);
+    if (errors === undefined) {
+      return <span>&nbsp;</span>;
+    }
+    if (props.errorsDisplayMode === 'first') {
+      return errors[0];
+    } else {
+      return errors.join(',');
+    }
+  };
   return (
     <form onSubmit={onSubmit} className={sc('')}>
       <table>
-        {props.fields.map(item => (
-          <tr key={item.name} className={sc('tr')}>
-            <td className={sc('td')}>{item.label}</td>
-            <td className={sc('td')}>
-              <Input
-                type={item.input.type}
-                value={formData[item.name]}
-                onChange={e => onInputChange(item.name, e.target.value)}
-              />
-              <span>{props.errors[item.name]}</span>
-            </td>
+        <tbody>
+          {props.fields.map(item => (
+            <tr key={item.name} className={sc('tr')}>
+              <td className={sc('td')}>
+                <span className={sc('label')}>{item.label}</span>
+              </td>
+              <td className={sc('td')}>
+                <Input
+                  type={item.input.type}
+                  value={formData[item.name]}
+                  onChange={e => onInputChange(item.name, e.target.value)}
+                />
+                <div className={sc('error')}>
+                  {errorsDisplay(props.errors[item.name])}
+                </div>
+              </td>
+            </tr>
+          ))}
+          <tr className={sc('tr')}>
+            <td className={sc('td')} />
+            <td className={sc('td')}>{props.buttons}</td>
           </tr>
-        ))}
-        <tr className={sc('tr')}>
-          <td className={sc('td')} />
-          <td className={sc('td')}>{props.buttons}</td>
-        </tr>
+        </tbody>
       </table>
     </form>
   );
+};
+Form.defaultProps = {
+  errorsDisplayMode: 'first',
 };
 export default Form;

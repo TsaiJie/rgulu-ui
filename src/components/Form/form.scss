@@ -1,13 +1,24 @@
+@import "src/components/variable";
 .gulu-form {
   &-td {
+    vertical-align: top;
     padding-top: 0;
-    padding-bottom: 32px;
+    padding-bottom: 8px;
   }
   &-tr:last-child &-td {
     padding-bottom: 0;
   }
+  // label和input的行高一样 保证对齐
+  &-label {
+    line-height: 32px;
+  }
   &-td + &-td {
     padding-left: 16px;
+  }
+  &-error {
+    color: $danger;
+    margin-top: 4px;
+    font-size: 0.8em;
   }
 
 }

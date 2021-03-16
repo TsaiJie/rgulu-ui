@@ -3,7 +3,7 @@
 ### 1 默认用法
 
 ```tsx
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useCallback } from 'react';
 import { Form, Button, FormValue, Validator, noError } from 'rgulu-ui';
 
 export default () => {
@@ -16,19 +16,25 @@ export default () => {
     { name: 'password', label: '密码', input: { type: 'password' } },
   ]);
   const [errors, setErrors] = useState({});
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const rules = [
-      { key: 'username', required: true },
-      { key: 'username', minLength: 8, maxLength: 16 },
-      { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
-      { key: 'password', required: true },
-    ];
+  const rules = [
+    { key: 'username', required: true },
+    { key: 'username', minLength: 8, maxLength: 16 },
+    { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
+    { key: 'password', required: true },
+  ];
+
+  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     const errors: FormErrors = Validator(formData, rules);
     if (noError(errors)) {
       console.log(errors);
     }
     setErrors(errors);
-  };
+  }, []);
+  const onChange = useCallback(newValue => {
+    const errors: FormErrors = Validator(newValue, rules);
+    setFormData(newValue);
+    setErrors(errors);
+  }, []);
   console.log(FormValue);
   return (
     <Fragment>
@@ -43,7 +49,7 @@ export default () => {
             <Button>返回</Button>
           </Fragment>
         }
-        onChange={newValue => setFormData(newValue)}
+        onChange={newValue => onChange(newValue)}
         onSubmit={onSubmit}
         errors={errors}
       />
