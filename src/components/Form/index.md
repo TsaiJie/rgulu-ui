@@ -31,19 +31,23 @@ export default () => {
   };
   console.log(FormValue);
   return (
-    <Form
-      value={formData}
-      fields={fields}
-      buttons={
-        <Fragment>
-          <Button type="submit">提交</Button>
-          <Button>返回</Button>
-        </Fragment>
-      }
-      onChange={newValue => setFormData(newValue)}
-      onSubmit={onSubmit}
-      errors={errors}
-    />
+    <Fragment>
+      <Form
+        value={formData}
+        fields={fields}
+        buttons={
+          <Fragment>
+            <Button type="submit" level={'main'}>
+              提交
+            </Button>
+            <Button>返回</Button>
+          </Fragment>
+        }
+        onChange={newValue => setFormData(newValue)}
+        onSubmit={onSubmit}
+        errors={errors}
+      />
+    </Fragment>
   );
 };
 ```

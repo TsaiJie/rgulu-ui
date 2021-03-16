@@ -1,0 +1,13 @@
+.gulu-form {
+  &-td {
+    padding-top: 0;
+    padding-bottom: 32px;
+  }
+  &-tr:last-child &-td {
+    padding-bottom: 0;
+  }
+  &-td + &-td {
+    padding-left: 16px;
+  }
+
+}

@@ -1,5 +1,4 @@
 @import "src/components/variable";
-$h: 32px;
 $border-color: #d9d9d9;
 $color: #333;
 $radius: 4px;
@@ -7,8 +6,7 @@ $grey: gray;
 .gulu-button {
   position: relative;
   box-sizing: border-box;
-  height: $h;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
@@ -19,7 +17,10 @@ $grey: gray;
   border-radius: $radius;
   white-space: nowrap;
   box-shadow: 0 1px 0 fade-out(black, 0.95);
-  padding: 0 15px;
+  padding: 4px 16px;
+  line-height: 22px;
+  transition: all 300ms;
+  margin: 0 2px;
   &:hover,
   &:focus {
     color: $main;
