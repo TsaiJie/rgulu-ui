@@ -1,4 +1,5 @@
 import { FormValue } from './form';
+
 interface FormRule {
   key: string;
   required?: boolean;
@@ -6,18 +7,22 @@ interface FormRule {
   maxLength?: number;
   pattern?: RegExp;
 }
+
 interface FormErrors {
   [k: string]: string[];
 }
+
 type FormRules = Array<FormRule>;
+
 function isEmpty(value: unknown) {
-  if (value === undefined || value === null || value === '') {
-    return true;
-  }
-  return false;
+  return value === undefined || value === null || value === '';
 }
+export function noError(errors: any) {
+  return Object.keys(errors).length === 0;
+}
+
 const Validator = (formValue: FormValue, rules: FormRules): FormErrors => {
-  let errors: unknown = {};
+  let errors: FormErrors = {};
   const addError = (key: string, message: string) => {
     if (errors[key] === undefined) {
       errors[key] = [];

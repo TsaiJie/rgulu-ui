@@ -4,7 +4,8 @@
 
 ```tsx
 import React, { useState, Fragment } from 'react';
-import { Form, Button, FormValue, Validator } from 'rgulu-ui';
+import { Form, Button, FormValue, Validator, noError } from 'rgulu-ui';
+
 export default () => {
   const [formData, setFormData] = useState<FormValue>({
     username: '',
@@ -22,20 +23,21 @@ export default () => {
       { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
       { key: 'password', required: true },
     ];
-    const errors = Validator(formData, rules);
-    console.log(errors);
+    const errors: FormErrors = Validator(formData, rules);
+    if (noError(errors)) {
+      console.log(errors);
+    }
     setErrors(errors);
   };
+  console.log(FormValue);
   return (
     <Form
       value={formData}
       fields={fields}
       buttons={
         <Fragment>
-          <Button type="submit" size="small">
-            提交
-          </Button>
-          <Button size="small">返回</Button>
+          <Button type="submit">提交</Button>
+          <Button>返回</Button>
         </Fragment>
       }
       onChange={newValue => setFormData(newValue)}

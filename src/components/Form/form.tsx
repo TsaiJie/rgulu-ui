@@ -1,6 +1,7 @@
 import React, { ReactFragment } from 'react';
+import Input from '@/components/Form/Input';
 export interface FormValue {
-  [K: string]: unknown;
+  [K: string]: string;
 }
 interface Props {
   value: FormValue;
@@ -10,6 +11,7 @@ interface Props {
   onChange: (value: FormValue) => void;
   errors: { [K: string]: string[] };
 }
+
 const Form: React.FunctionComponent<Props> = props => {
   const formData = props.value;
   const onSubmit: React.FormEventHandler<HTMLFormElement> = e => {
@@ -25,7 +27,7 @@ const Form: React.FunctionComponent<Props> = props => {
       {props.fields.map(item => (
         <div key={item.name}>
           {item.label}
-          <input
+          <Input
             type={item.input.type}
             value={formData[item.name]}
             onChange={e => onInputChange(item.name, e.target.value)}
