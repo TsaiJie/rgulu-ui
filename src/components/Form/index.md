@@ -6,22 +6,31 @@
 import React, { useState, Fragment, useCallback } from 'react';
 import { Form, Button, FormValue, Validator, noError } from 'rgulu-ui';
 
-const usernames = ['frank', 'jack', 'alice', 'bob'];
+const usernames = ['frank', 'jackjack', 'alice', 'bob'];
+const password = ['1234', '5678'];
 const checkUserName = (
   username: string,
   succeed: () => void,
   fail: () => void,
 ) => {
   setTimeout(() => {
-    console.log(
-      '我现在知道用户名是否存在',
-      username,
-      usernames.indexOf(username),
-    );
     if (usernames.indexOf(username) >= 0) {
-      succeed();
+      succeed('用户名已存在');
     } else {
-      fail();
+      fail('用户名没有被使用，可以创建');
+    }
+  }, 1000);
+};
+const checkPassword = (
+  password: string,
+  succeed: () => void,
+  fail: () => void,
+) => {
+  setTimeout(() => {
+    if (password.indexOf(password) >= 0) {
+      succeed('密码已存在');
+    } else {
+      fail('密码没有被使用，可以创建');
     }
   }, 1000);
 };
@@ -43,9 +52,19 @@ export default () => {
       validator: {
         name: 'unique',
         validate(username: string) {
-          console.log('有人调用了validate');
-          return new Promise<void>((resolve, reject) => {
+          return new Promise<string>((resolve, reject) => {
             checkUserName(username, resolve, reject);
+          });
+        },
+      },
+    },
+    {
+      key: 'password',
+      validator: {
+        name: 'uniquepassword',
+        validate(password: string) {
+          return new Promise<string>((resolve, reject) => {
+            checkPassword(password, resolve, reject);
           });
         },
       },

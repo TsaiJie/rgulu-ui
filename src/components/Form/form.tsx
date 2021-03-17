@@ -30,7 +30,6 @@ const Form: React.FunctionComponent<Props> = props => {
     props.onChange(newFormValue);
   };
   const errorsDisplay = (errors: string[] | undefined) => {
-    console.log(errors);
     if (errors === undefined) {
       return <span>&nbsp;</span>;
     }
