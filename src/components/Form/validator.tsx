@@ -43,7 +43,6 @@ const Validator = (
     const value = formValue[rule.key];
     if (rule.validator) {
       //自定义的校验器
-
       const promise = rule.validator.validate(value);
       addError(rule.key, { message: rule.validator.name, promise });
     }
@@ -68,19 +67,23 @@ const Validator = (
   const messageWithPromiseList = messageAndPromiseList.map(
     item => item.message,
   );
-  console.log(promiseList, messageWithPromiseList);
+  debugger;
   const x = (data: any) => {
     console.log(data);
-    messageWithPromiseList.forEach(message => {
-      console.log(message);
-      Object.keys(errors).map(key => {
-        errors[key].forEach((item: OneError) => {
+    outer: for (let i = 0; i < messageWithPromiseList.length; i++) {
+      const message = messageWithPromiseList[i];
+      const errorsList = Object.keys(errors);
+      for (let j = 0; j < errorsList.length; j++) {
+        const key = errorsList[j];
+        for (let k = 0; k < errors[key].length; k++) {
+          const item = errors[key][k];
           if (item.message === message) {
-            item.message = data.toString();
+            item.message = data;
+            break outer;
           }
-        });
-      });
-    });
+        }
+      }
+    }
 
     const newErrors = Object.keys(errors).map<[string, string[]]>(key => {
       // key username/ password
@@ -89,7 +92,9 @@ const Validator = (
     });
     callback(formEntries(newErrors));
   };
-  Promise.all(promiseList).then(x, x);
+
+  promiseList.forEach(promise => promise.then(x, x));
+  // Promise.all(promiseList).then(x, x);
 };
 
 export default Validator;

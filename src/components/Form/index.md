@@ -7,7 +7,7 @@ import React, { useState, Fragment, useCallback } from 'react';
 import { Form, Button, FormValue, Validator, noError } from 'rgulu-ui';
 
 const usernames = ['frank', 'jackjack', 'alice', 'bob'];
-const password = ['1234', '5678'];
+const passwords = ['1234', '5678'];
 const checkUserName = (
   username: string,
   succeed: () => void,
@@ -19,7 +19,7 @@ const checkUserName = (
     } else {
       fail('用户名没有被使用，可以创建');
     }
-  }, 1000);
+  }, 1200);
 };
 const checkPassword = (
   password: string,
@@ -27,7 +27,7 @@ const checkPassword = (
   fail: () => void,
 ) => {
   setTimeout(() => {
-    if (password.indexOf(password) >= 0) {
+    if (passwords.indexOf(password) >= 0) {
       succeed('密码已存在');
     } else {
       fail('密码没有被使用，可以创建');
@@ -47,6 +47,7 @@ export default () => {
   const rules = [
     { key: 'username', required: true },
     { key: 'username', minLength: 8, maxLength: 16 },
+    { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
     {
       key: 'username',
       validator: {
@@ -58,6 +59,7 @@ export default () => {
         },
       },
     },
+    { key: 'password', required: true },
     {
       key: 'password',
       validator: {
@@ -69,14 +71,13 @@ export default () => {
         },
       },
     },
-    { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
-    { key: 'password', required: true },
+
+    // { key: 'password', required: true },
   ];
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       Validator(formData, rules, errors => {
-        console.log('errors', errors);
         if (noError(errors)) {
           console.log(errors);
         }
