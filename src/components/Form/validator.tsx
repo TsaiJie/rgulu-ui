@@ -50,10 +50,10 @@ const Validator = (
       addError(rule.key, { message: '必填' });
     }
     if (rule.minLength && !isEmpty(value) && value!.length < rule.minLength) {
-      addError(rule.key, { message: '太短了' });
+      addError(rule.key, { message: '字符太短了' });
     }
     if (rule.maxLength && !isEmpty(value) && value!.length > rule.maxLength) {
-      addError(rule.key, { message: '太长了' });
+      addError(rule.key, { message: '字符太长了' });
     }
     if (rule.pattern && !rule.pattern.test(value)) {
       addError(rule.key, { message: '格式不正确' });
@@ -95,7 +95,6 @@ const Validator = (
   } else {
     promiseList.forEach(async promise => await promise.then(x, x));
   }
-
   // Promise.all(promiseList).then(x, x);
 };
 

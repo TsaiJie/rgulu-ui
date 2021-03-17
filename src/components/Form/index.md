@@ -20,7 +20,6 @@ export default () => {
     { key: 'username', minLength: 8, maxLength: 16 },
     { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
     { key: 'password', required: true },
-    // { key: 'password', required: true },
   ];
 
   const onSubmit = useCallback(
@@ -32,16 +31,14 @@ export default () => {
         setErrors(errors);
       });
     },
-    [formData],
+    [formData, rules],
   );
   const onChange = useCallback(newValue => {
-    // const errors: FormErrors = Validator(newValue, rules);
     setFormData({ ...newValue });
-    // setErrors(errors);
   }, []);
   return (
     <Fragment>
-      {JSON.stringify(errors)}
+      {/*{JSON.stringify(errors)}*/}
       <Form
         value={formData}
         fields={fields}
@@ -133,7 +130,6 @@ export default () => {
         },
       },
     },
-    // { key: 'password', required: true },
   ];
 
   const onSubmit = useCallback(
@@ -148,13 +144,11 @@ export default () => {
     [formData],
   );
   const onChange = useCallback(newValue => {
-    // const errors: FormErrors = Validator(newValue, rules);
     setFormData({ ...newValue });
-    // setErrors(errors);
   }, []);
   return (
     <Fragment>
-      {JSON.stringify(errors)}
+      {/*{JSON.stringify(errors)}*/}
       <Form
         value={formData}
         fields={fields}
