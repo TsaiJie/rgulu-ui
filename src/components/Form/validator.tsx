@@ -67,9 +67,7 @@ const Validator = (
   const messageWithPromiseList = messageAndPromiseList.map(
     item => item.message,
   );
-  debugger;
-  const x = (data: any) => {
-    console.log(data);
+  const x = (data?: any) => {
     outer: for (let i = 0; i < messageWithPromiseList.length; i++) {
       const message = messageWithPromiseList[i];
       const errorsList = Object.keys(errors);
@@ -92,8 +90,12 @@ const Validator = (
     });
     callback(formEntries(newErrors));
   };
+  if (promiseList.length === 0) {
+    x();
+  } else {
+    promiseList.forEach(async promise => await promise.then(x, x));
+  }
 
-  promiseList.forEach(promise => promise.then(x, x));
   // Promise.all(promiseList).then(x, x);
 };
 
