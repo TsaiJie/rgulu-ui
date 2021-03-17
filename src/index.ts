@@ -11,10 +11,11 @@ export { default as MenuItem } from './components/menu/menuItem';
 export { default as SubMenu } from './components/menu/submenu';
 export { default as Icon } from './components/icon/icon';
 export { default as Transition } from './components/transition/transition';
-export { default as Form } from './components/Form/form';
-export { FormValue } from './components/Form/form';
-export { default as Validator } from './components/Form/validator';
-export { noError } from './components/Form/validator';
+export { default as Form } from './components/form/form';
+export { FormValue } from './components/form/form';
+export { default as Validator } from './components/form/validator';
+export { noError } from './components/form/validator';
+export { default as Input } from './components/input/input';
 
 import './components/variable.scss';
 import './components/mixin.scss';

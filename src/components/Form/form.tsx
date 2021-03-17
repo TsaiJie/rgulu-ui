@@ -1,5 +1,5 @@
 import React, { ReactFragment } from 'react';
-import Input from '@/components/Form/Input';
+import Input from '@/components/input/input';
 import { scopedClassMaker } from '@/helper/classes';
 import './form.scss';
 
