@@ -2,7 +2,7 @@ import React, { FunctionComponentElement, useContext, useState } from 'react';
 import classNames from 'classnames';
 import { MenuContext } from '@/components/menu/menu';
 import { MenuItemProps } from '@/components/menu/menuItem';
-import { Icon } from '@/index';
+import Icon from '@/components/icon/icon';
 import Transition from '@/components/transition/transition';
 
 export interface SubMenuProps {

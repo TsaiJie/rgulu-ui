@@ -6,7 +6,7 @@ import './dialog.scss';
  */
 import ReactDOM from 'react-dom';
 import { scopedClassMaker } from '@/helper/classes';
-import { Button } from '@/index';
+import Button from '@/components/button/button';
 interface Props {
   visible: boolean;
   buttons?: ReactElement[];
