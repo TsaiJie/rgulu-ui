@@ -1,5 +1,4 @@
 import React, { Fragment, ReactElement, ReactNode, useEffect } from 'react';
-import '@/components/index.scss';
 import './dialog.scss';
 /**
  * 1 scoped
