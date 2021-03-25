@@ -5,6 +5,7 @@
 ```tsx
 import React, { useState, Fragment, useCallback } from 'react';
 import { Form, Button, FormValue, Validator, noError } from 'rgulu-ui';
+
 export default () => {
   const [formData, setFormData] = useState<FormValue>({
     username: '',
@@ -72,26 +73,20 @@ const checkUserName = (
   succeed: () => void,
   fail: () => void,
 ) => {
+  console.log('fail', fail);
+  console.log('succeed', succeed);
   setTimeout(() => {
     if (usernames.indexOf(username) >= 0) {
-      succeed('用户名已存在');
+      fail();
     } else {
-      fail('用户名没有被使用，可以创建');
+      succeed();
     }
   }, 1200);
 };
-const checkPassword = (
-  password: string,
-  succeed: () => void,
-  fail: () => void,
-) => {
-  setTimeout(() => {
-    if (passwords.indexOf(password) >= 0) {
-      succeed('密码已存在');
-    } else {
-      fail('密码没有被使用，可以创建');
-    }
-  }, 1500);
+const validator = (username: string) => {
+  return new Promise<void>((resolve, reject) => {
+    checkUserName(username, resolve, () => reject('重复了'));
+  });
 };
 export default () => {
   const [formData, setFormData] = useState<FormValue>({
@@ -107,29 +102,9 @@ export default () => {
     { key: 'username', required: true },
     { key: 'username', minLength: 8, maxLength: 16 },
     { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
-    {
-      key: 'username',
-      validator: {
-        name: 'unique',
-        validate(username: string) {
-          return new Promise<string>((resolve, reject) => {
-            checkUserName(username, resolve, reject);
-          });
-        },
-      },
-    },
+    { key: 'username', validator },
+    { key: 'username', validator },
     { key: 'password', required: true },
-    {
-      key: 'password',
-      validator: {
-        name: 'uniquepassword',
-        validate(password: string) {
-          return new Promise<string>((resolve, reject) => {
-            checkPassword(password, resolve, reject);
-          });
-        },
-      },
-    },
   ];
 
   const onSubmit = useCallback(
