@@ -25,7 +25,7 @@ const Validator = (
   rules: FormRules,
   callback: (errors: any) => void,
 ) => {
-  let errors: any = {};
+  let errors: { [key: string]: OneError[] } = {};
   const addError = (key: string, error: OneError) => {
     if (errors[key] === undefined) {
       errors[key] = [];
@@ -77,56 +77,61 @@ const Validator = (
     password: ["密码重复了", "密码重复了"]
     username: ["账号重复了", "账号重复了"]
   }
-
   *
   * */
   const x = Object.keys(errors).map(key => {
     // ["username", "password"]
-    return errors[key].map((promise: Promise<string> | string) => [
-      key,
-      promise,
-    ]);
+    return errors[key].map<[string, OneError]>(
+      (error: Promise<string> | string) => [key, error],
+    );
   });
   const y = flat(x);
   // 让[] 形成新的promise 需要让这个promise永远不出错
   const z = y.map((item: [string, string | Promise<string>]) => {
     const key = item[0];
     const promiseOrString = item[1];
-    return (promiseOrString instanceof Promise
-      ? promiseOrString
-      : Promise.reject(promiseOrString)
-    ).then(
+    const promise =
+      promiseOrString instanceof Promise
+        ? promiseOrString
+        : Promise.reject(promiseOrString);
+    return promise.then<[string, undefined], [string, string]>(
       () => [key, undefined],
       (reason: string) => [key, reason],
     );
   });
+  // 类型守卫 guard
+  function isError(
+    item: [string, undefined] | [string, string],
+  ): item is [string, string] {
+    return typeof item[1] === 'string';
+  }
   Promise.all(z).then(results => {
-    // @ts-ignore
-    callback(zip(results));
+    // results = [["username", undefined], ["password", "too long"]]
+    callback(zip(results.filter<[string, string]>(isError)));
   });
 };
 
 export default Validator;
 
 // kvList = [["username", "账号重复了"],["password", "密码重复了"] ]
-function zip(kvList: Array<[string, string | undefined]>) {
-  const result: { [key: string]: Array<string> } = {};
+function zip(kvList: Array<[string, string]>) {
+  const result: { [key: string]: string[] } = {};
   kvList.map(([key, value]) => {
     result[key] = result[key] || [];
-    if (typeof value === 'string') {
-      result[key].push(value);
-    }
+    result[key].push(value);
   });
   return result;
 }
 
-function flat(array: Array<any>) {
-  const result = [];
+function flat<T>(array: Array<T | T[]>) {
+  const result: T[] = [];
   for (let i = 0; i < array.length; i++) {
     if (Array.isArray(array[i])) {
-      result.push(...array[i]);
+      // T[]
+      result.push(...(array[i] as T[]));
     } else {
-      result.push(array[i]);
+      // T
+      result.push(array[i] as T);
     }
   }
   return result;
