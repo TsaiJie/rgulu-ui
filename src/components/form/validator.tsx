@@ -52,22 +52,86 @@ const Validator = (
       addError(rule.key, '格式不正确');
     }
   });
-  console.log('errors', errors);
+  /*
+    errors
+  * {
+  *   username: [e1, e2, e3],
+  *   password: [e4, e5]
+  * }
+  * =>
+   x
+   [
+     [["username", e1], ["username", e2],["username", e3]],
+     [["password", e4], ["password", e5]]
+   ]
+   y
+   [
+    ["username", e1], ["username", e2],["username", e3],["password", e4], ["password", e5]
+   ]
+   把["username", e1]变为 Promise<[u1, p1]>
+  z
+  [promise, promise, promise]
+  把 z传给Promise.all()
+  * zip
+  {
+    password: ["密码重复了", "密码重复了"]
+    username: ["账号重复了", "账号重复了"]
+  }
+
+  *
+  * */
+  const x = Object.keys(errors).map(key => {
+    // ["username", "password"]
+    return errors[key].map((promise: Promise<string> | string) => [
+      key,
+      promise,
+    ]);
+  });
+  const y = flat(x);
+  // 让[] 形成新的promise 需要让这个promise永远不出错
+  const z = y.map((item: [string, string | Promise<string>]) => {
+    const key = item[0];
+    const promiseOrString = item[1];
+    return (promiseOrString instanceof Promise
+      ? promiseOrString
+      : Promise.reject(promiseOrString)
+    ).then(
+      () => [key, undefined],
+      (reason: string) => [key, reason],
+    );
+  });
+  Promise.all(z).then(results => {
+    // @ts-ignore
+    callback(zip(results));
+  });
 };
 
 export default Validator;
 
-// function flat(array: Array<any>) {
-//   const result = [];
-//   for (let i = 0; i < array.length; i++) {
-//     if (Array.isArray(array[i])) {
-//       result.push(...array[i]);
-//     } else {
-//       result.push(array[i]);
-//     }
-//   }
-//   return result;
-// }
+// kvList = [["username", "账号重复了"],["password", "密码重复了"] ]
+function zip(kvList: Array<[string, string | undefined]>) {
+  const result: { [key: string]: Array<string> } = {};
+  kvList.map(([key, value]) => {
+    result[key] = result[key] || [];
+    if (typeof value === 'string') {
+      result[key].push(value);
+    }
+  });
+  return result;
+}
+
+function flat(array: Array<any>) {
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i])) {
+      result.push(...array[i]);
+    } else {
+      result.push(array[i]);
+    }
+  }
+  return result;
+}
+
 //
 // function formEntries(array: Array<[string, string[]]>) {
 //   const result: { [key: string]: string[] } = {};

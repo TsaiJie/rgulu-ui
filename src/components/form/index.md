@@ -21,6 +21,7 @@ export default () => {
     { key: 'username', minLength: 8, maxLength: 16 },
     { key: 'username', pattern: /^[A-Za-z0-9]+$/ },
     { key: 'password', required: true },
+    { key: 'password', required: true },
   ];
 
   const onSubmit = useCallback(
@@ -73,19 +74,36 @@ const checkUserName = (
   succeed: () => void,
   fail: () => void,
 ) => {
-  console.log('fail', fail);
-  console.log('succeed', succeed);
   setTimeout(() => {
     if (usernames.indexOf(username) >= 0) {
       fail();
     } else {
       succeed();
     }
-  }, 1200);
+  }, 200);
+};
+const checkPassword = (
+  password: string,
+  succeed: () => void,
+  fail: () => void,
+) => {
+  setTimeout(() => {
+    if (passwords.indexOf(password) >= 0) {
+      fail();
+    } else {
+      succeed();
+    }
+  }, 500);
 };
 const validator = (username: string) => {
-  return new Promise<void>((resolve, reject) => {
-    checkUserName(username, resolve, () => reject('重复了'));
+  return new Promise<string>((resolve, reject) => {
+    checkUserName(username, resolve, () => reject('账号重复了'));
+  });
+};
+const validatorPassword = (password: string) => {
+  console.log('1111');
+  return new Promise<string>((resolve, reject) => {
+    checkPassword(password, resolve, () => reject('密码重复了'));
   });
 };
 export default () => {
@@ -105,6 +123,8 @@ export default () => {
     { key: 'username', validator },
     { key: 'username', validator },
     { key: 'password', required: true },
+    { key: 'password', validator: validatorPassword },
+    { key: 'password', validator: validatorPassword },
   ];
 
   const onSubmit = useCallback(
@@ -123,7 +143,7 @@ export default () => {
   }, []);
   return (
     <Fragment>
-      {/*{JSON.stringify(errors)}*/}
+      {/*{JSON.stringify(errors) }*/}
       <Form
         value={formData}
         fields={fields}
