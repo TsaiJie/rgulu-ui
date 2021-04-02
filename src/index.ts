@@ -16,6 +16,7 @@ export { FormValue } from './components/form/form';
 export { default as Validator } from './components/form/validator';
 export { noError } from './components/form/validator';
 export { default as Input } from './components/input/input';
+export { default as Scroll } from './components/scroll/scroll';
 
 import './components/variable.scss';
 import './components/mixin.scss';
