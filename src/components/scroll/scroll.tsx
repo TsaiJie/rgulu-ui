@@ -2,6 +2,7 @@ import * as React from 'react';
 import { HTMLAttributes } from 'react';
 import { scopedClassMaker } from '@/helper/classes';
 import './scroll.scss';
+import { scrollbarWidth } from '@/components/scroll/scrollbarWidth';
 
 const sc = scopedClassMaker('gulu-scroll');
 
@@ -11,7 +12,9 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const { children, ...rest } = props;
   return (
     <div className={sc('')} {...rest}>
-      <div className={sc('inner')}>{children}</div>
+      <div className={sc('inner')} style={{ right: -scrollbarWidth() }}>
+        {children}
+      </div>
     </div>
   );
 };
