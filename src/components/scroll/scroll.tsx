@@ -18,15 +18,25 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const { children, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [barHeight, setBarHeight] = useState(0);
-  const onScroll: UIEventHandler = e => {};
+  const [barTop, setBarTop] = useState(0);
+  const viewHeight = useRef<number>(0);
+  const onScroll: UIEventHandler = e => {
+    //  x1/h1 = x/h    x1 = x/h * h1  x1= scrollTop要求的  x = scrollTop h1 =  viewHeight h =  scrollHeight
+    //  x = scrollTop/scrollHeight * viewHeight
+    // 整个区域滚动的高度
+    const scrollHeight = containerRef.current!.scrollHeight;
+    // 可视范围的高度
+    const scrollTop = containerRef.current!.scrollTop;
+    setBarTop((scrollTop * viewHeight.current) / scrollHeight);
+  };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
     // 整个区域滚动的高度
     const scrollHeight = containerRef.current!.scrollHeight;
     // 可视范围的高度
-    const viewHeight = containerRef.current!.getBoundingClientRect().height;
+    viewHeight.current = containerRef.current!.getBoundingClientRect().height;
     // x/y = x1/y1的思想
-    setBarHeight((viewHeight * viewHeight) / scrollHeight);
+    setBarHeight((viewHeight.current * viewHeight.current) / scrollHeight);
   }, []);
 
   return (
@@ -40,7 +50,18 @@ const Scroll: React.FunctionComponent<Props> = props => {
         {children}
       </div>
       <div className={sc('track')}>
-        <div className={sc('bar')} style={{ height: barHeight }} />
+        <div
+          className={sc('bar')}
+          style={{
+            height: barHeight,
+            //有可能bar会超出scroll的区域
+            transform: `translateY(${
+              barTop + barHeight >= viewHeight.current
+                ? viewHeight.current - barHeight
+                : barTop
+            }px)`,
+          }}
+        />
       </div>
     </div>
   );
