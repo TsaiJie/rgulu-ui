@@ -40,8 +40,12 @@ const Scroll: React.FunctionComponent<Props> = props => {
     const scrollHeight = containerRef.current!.scrollHeight;
     // 可视范围的高度
     const scrollTop = containerRef.current!.scrollTop;
+    console.log(1111);
     setBarTop((scrollTop * viewHeightRef.current) / scrollHeight);
   };
+  useEffect(() => {
+    console.log(barTop, 'bartTop');
+  }, [barTop]);
   //对比第一次和第二次鼠标移动的位置
   const onMouseDownBar: MouseEventHandler = e => {
     draggingRef.current = true;
@@ -51,11 +55,20 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const onMouseMoveBar = (e: MouseEvent) => {
     if (draggingRef.current) {
       const delta = e.clientY - firstYRef.current;
-      setBarTop(delta + firstBarTopRef.current);
+      const newBarTop = delta + firstBarTopRef.current;
+      setBarTop(newBarTop);
+      const scrollHeight = containerRef.current!.scrollHeight;
+      containerRef.current!.scrollTop =
+        (newBarTop * scrollHeight) / viewHeightRef.current;
     }
   };
   const onMouseUpBar = (e: MouseEvent) => {
     draggingRef.current = false;
+  };
+  const onSelect = (e: Event) => {
+    if (draggingRef.current) {
+      e.preventDefault();
+    }
   };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
@@ -67,11 +80,14 @@ const Scroll: React.FunctionComponent<Props> = props => {
     setBarHeight(
       (viewHeightRef.current * viewHeightRef.current) / scrollHeight,
     );
+
     document.addEventListener('mouseup', onMouseUpBar);
     document.addEventListener('mousemove', onMouseMoveBar);
+    document.addEventListener('selectstart', onSelect);
     return () => {
       document.removeEventListener('mousemove', onMouseMoveBar);
       document.removeEventListener('mouseup', onMouseUpBar);
+      document.removeEventListener('selectstart', onSelect);
     };
   }, []);
   return (
