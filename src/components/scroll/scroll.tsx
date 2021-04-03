@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   HTMLAttributes,
+  MouseEventHandler,
   UIEventHandler,
   useEffect,
   useRef,
@@ -18,27 +19,61 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const { children, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [barHeight, setBarHeight] = useState(0);
-  const [barTop, setBarTop] = useState(0);
-  const viewHeight = useRef<number>(0);
+  const [barTop, _setBarTop] = useState(0);
+  const viewHeightRef = useRef(0);
+  const draggingRef = useRef(false);
+  const firstYRef = useRef(0);
+  const firstBarTopRef = useRef(0);
+  const setBarTop = (value: number) => {
+    const scrollHeight = containerRef.current!.scrollHeight;
+    const maxBarTop =
+      ((scrollHeight - viewHeightRef.current) * viewHeightRef.current) /
+      scrollHeight;
+    if (value < 0) return;
+    if (value > maxBarTop) return;
+    _setBarTop(value);
+  };
   const onScroll: UIEventHandler = e => {
-    //  x1/h1 = x/h    x1 = x/h * h1  x1= scrollTop要求的  x = scrollTop h1 =  viewHeight h =  scrollHeight
-    //  x = scrollTop/scrollHeight * viewHeight
+    //  x1/h1 = x/h    x1 = x/h * h1  x1= scrollTop要求的  x = scrollTop h1 =  viewHeightRef h =  scrollHeight
+    //  x = scrollTop/scrollHeight * viewHeightRef
     // 整个区域滚动的高度
     const scrollHeight = containerRef.current!.scrollHeight;
     // 可视范围的高度
     const scrollTop = containerRef.current!.scrollTop;
-    setBarTop((scrollTop * viewHeight.current) / scrollHeight);
+    setBarTop((scrollTop * viewHeightRef.current) / scrollHeight);
+  };
+  //对比第一次和第二次鼠标移动的位置
+  const onMouseDownBar: MouseEventHandler = e => {
+    draggingRef.current = true;
+    firstYRef.current = e.clientY;
+    firstBarTopRef.current = barTop;
+  };
+  const onMouseMoveBar = (e: MouseEvent) => {
+    if (draggingRef.current) {
+      const delta = e.clientY - firstYRef.current;
+      setBarTop(delta + firstBarTopRef.current);
+    }
+  };
+  const onMouseUpBar = (e: MouseEvent) => {
+    draggingRef.current = false;
   };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
     // 整个区域滚动的高度
     const scrollHeight = containerRef.current!.scrollHeight;
     // 可视范围的高度
-    viewHeight.current = containerRef.current!.getBoundingClientRect().height;
+    viewHeightRef.current = containerRef.current!.getBoundingClientRect().height;
     // x/y = x1/y1的思想
-    setBarHeight((viewHeight.current * viewHeight.current) / scrollHeight);
+    setBarHeight(
+      (viewHeightRef.current * viewHeightRef.current) / scrollHeight,
+    );
+    document.addEventListener('mouseup', onMouseUpBar);
+    document.addEventListener('mousemove', onMouseMoveBar);
+    return () => {
+      document.removeEventListener('mousemove', onMouseMoveBar);
+      document.removeEventListener('mouseup', onMouseUpBar);
+    };
   }, []);
-
   return (
     <div className={sc('')} {...rest}>
       <div
@@ -54,13 +89,9 @@ const Scroll: React.FunctionComponent<Props> = props => {
           className={sc('bar')}
           style={{
             height: barHeight,
-            //有可能bar会超出scroll的区域
-            transform: `translateY(${
-              barTop + barHeight >= viewHeight.current
-                ? viewHeight.current - barHeight
-                : barTop
-            }px)`,
+            transform: `translateY(${barTop}px)`,
           }}
+          onMouseDown={onMouseDownBar}
         />
       </div>
     </div>
