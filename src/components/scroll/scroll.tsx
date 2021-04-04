@@ -10,9 +10,9 @@ import {
 import { scopedClassMaker } from '@/helper/classes';
 import './scroll.scss';
 import { scrollbarWidth } from '@/components/scroll/scrollbarWidth';
+import { CSSTransition } from 'react-transition-group';
 
 const sc = scopedClassMaker('gulu-scroll');
-
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const Scroll: React.FunctionComponent<Props> = props => {
@@ -20,10 +20,12 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [barHeight, setBarHeight] = useState(0);
   const [barTop, _setBarTop] = useState(0);
+  const [barVisible, setBarVisible] = useState(false);
   const viewHeightRef = useRef(0);
   const draggingRef = useRef(false);
   const firstYRef = useRef(0);
   const firstBarTopRef = useRef(0);
+  const timeIdRef = useRef<null | number>(null);
   const setBarTop = (value: number) => {
     const scrollHeight = containerRef.current!.scrollHeight;
     const maxBarTop =
@@ -40,12 +42,17 @@ const Scroll: React.FunctionComponent<Props> = props => {
     const scrollHeight = containerRef.current!.scrollHeight;
     // 可视范围的高度
     const scrollTop = containerRef.current!.scrollTop;
-    console.log(1111);
     setBarTop((scrollTop * viewHeightRef.current) / scrollHeight);
+    setBarVisible(true);
+    if (timeIdRef.current !== null) {
+      window.clearTimeout(timeIdRef.current);
+    }
+    if (!draggingRef.current) {
+      timeIdRef.current = window.setTimeout(() => {
+        setBarVisible(false);
+      }, 500);
+    }
   };
-  useEffect(() => {
-    console.log(barTop, 'bartTop');
-  }, [barTop]);
   //对比第一次和第二次鼠标移动的位置
   const onMouseDownBar: MouseEventHandler = e => {
     draggingRef.current = true;
@@ -90,6 +97,7 @@ const Scroll: React.FunctionComponent<Props> = props => {
       document.removeEventListener('selectstart', onSelect);
     };
   }, []);
+  console.log(barVisible);
   return (
     <div className={sc('')} {...rest}>
       <div
@@ -100,16 +108,23 @@ const Scroll: React.FunctionComponent<Props> = props => {
       >
         {children}
       </div>
-      <div className={sc('track')}>
-        <div
-          className={sc('bar')}
-          style={{
-            height: barHeight,
-            transform: `translateY(${barTop}px)`,
-          }}
-          onMouseDown={onMouseDownBar}
-        />
-      </div>
+      <CSSTransition
+        in={barVisible}
+        timeout={300}
+        unmountOnExit={true}
+        classNames={'fade'}
+      >
+        <div className={sc('track')}>
+          <div
+            className={sc('bar')}
+            style={{
+              height: barHeight,
+              transform: `translateY(${barTop}px)`,
+            }}
+            onMouseDown={onMouseDownBar}
+          />
+        </div>
+      </CSSTransition>
     </div>
   );
 };
