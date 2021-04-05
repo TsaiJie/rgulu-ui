@@ -31,6 +31,19 @@
     width: 8px;
     border-radius: 4px;
   }
+  &-pulling {
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    &-icon {
+      font-size: 30px;
+    }
+    &-text {
+      font-size: 16px;
+    }
+  }
   .fade-enter {
     opacity: 0;
   }
