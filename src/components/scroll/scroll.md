@@ -6,7 +6,12 @@ import { Scroll } from 'rgulu-ui';
 
 export default (): React.FunctionComponent => {
   return (
-    <Scroll style={{ height: 400, border: '1px solid red' }}>
+    <Scroll
+      style={{ height: 400, border: '1px solid red' }}
+      onPull={() => {
+        console.log(111);
+      }}
+    >
       <p>1</p>
       <p>2</p>
       <p>3</p>

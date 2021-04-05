@@ -15,7 +15,9 @@ import { CSSTransition } from 'react-transition-group';
 
 const sc = scopedClassMaker('gulu-scroll');
 
-interface Props extends HTMLAttributes<HTMLDivElement> {}
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  onPull?: () => void;
+}
 
 const Scroll: React.FunctionComponent<Props> = props => {
   const { children, ...rest } = props;
@@ -31,7 +33,7 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const [translateY, _setTranslateY] = useState(0);
   const lastYPosRef = useRef(0);
   const moveCountRef = useRef(0);
-  const pullingRef = useRef(false);
+  const onPullingRef = useRef(false);
   const setBarTop = (value: number) => {
     const scrollHeight = containerRef.current!.scrollHeight;
     const maxBarTop =
@@ -105,7 +107,7 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const onTouchStart: TouchEventHandler = e => {
     const scrollTop = containerRef.current!.scrollTop;
     if (scrollTop !== 0) return;
-    pullingRef.current = true;
+    onPullingRef.current = true;
     moveCountRef.current = 0;
     lastYPosRef.current = e.touches[0].clientY;
   };
@@ -114,15 +116,19 @@ const Scroll: React.FunctionComponent<Props> = props => {
     moveCountRef.current += 1;
     if (moveCountRef.current === 1 && deltaY < 0) {
       //如果不是下拉置为 false
-      pullingRef.current = false;
+      onPullingRef.current = false;
       return;
     }
-    if (!pullingRef.current) return;
+    if (!onPullingRef.current) return;
     setTranslateY(translateY + deltaY);
     lastYPosRef.current = e.touches[0].clientY;
   };
   const onTouchEnd: TouchEventHandler = e => {
-    setTranslateY(0);
+    if (onPullingRef.current) {
+      setTranslateY(0);
+      props.onPull && props.onPull();
+      onPullingRef.current = false;
+    }
   };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
@@ -182,11 +188,11 @@ const Scroll: React.FunctionComponent<Props> = props => {
           />
         </CSSTransition>
       </div>
-      <div className={sc('pulling')} style={{ height: translateY }}>
+      <div className={sc('onPulling')} style={{ height: translateY }}>
         {translateY === 150 ? (
-          <span className={sc('pulling-text')}>释放手指即可更新</span>
+          <span className={sc('onPulling-text')}>释放手指即可更新</span>
         ) : (
-          <span className={sc('pulling-icon')}>↓</span>
+          <span className={sc('onPulling-icon')}>↓</span>
         )}
       </div>
     </div>
