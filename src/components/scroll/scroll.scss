@@ -1,7 +1,8 @@
 .gulu-scroll {
   position: relative;
+  overflow: hidden;
   &-inner {
-    overflow: scroll;
+    overflow: auto;
     position: absolute;
     top: 0;
     bottom: 0;

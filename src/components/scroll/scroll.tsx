@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   HTMLAttributes,
   MouseEventHandler,
+  TouchEventHandler,
   UIEventHandler,
   useEffect,
   useRef,
@@ -27,6 +28,10 @@ const Scroll: React.FunctionComponent<Props> = props => {
   const firstYRef = useRef(0);
   const firstBarTopRef = useRef(0);
   const timeIdRef = useRef<null | number>(null);
+  const [translateY, _setTranslateY] = useState(0);
+  const lastYPosRef = useRef(0);
+  const moveCountRef = useRef(0);
+  const pullingRef = useRef(false);
   const setBarTop = (value: number) => {
     const scrollHeight = containerRef.current!.scrollHeight;
     const maxBarTop =
@@ -35,6 +40,14 @@ const Scroll: React.FunctionComponent<Props> = props => {
     if (value < 0) return;
     if (value > maxBarTop) return;
     _setBarTop(value);
+  };
+  const setTranslateY = (y: number) => {
+    if (y < 0) {
+      y = 0;
+    } else if (y > 150) {
+      y = 150;
+    }
+    _setTranslateY(y);
   };
   const onScroll: UIEventHandler = e => {
     //  x1/h1 = x/h    x1 = x/h * h1  x1= scrollTop要求的  x = scrollTop h1 =  viewHeightRef h =  scrollHeight
@@ -89,6 +102,28 @@ const Scroll: React.FunctionComponent<Props> = props => {
       setBarVisible(false);
     }, 500);
   };
+  const onTouchStart: TouchEventHandler = e => {
+    const scrollTop = containerRef.current!.scrollTop;
+    if (scrollTop !== 0) return;
+    pullingRef.current = true;
+    moveCountRef.current = 0;
+    lastYPosRef.current = e.touches[0].clientY;
+  };
+  const onTouchMove: TouchEventHandler = e => {
+    const deltaY = e.touches[0].clientY - lastYPosRef.current;
+    moveCountRef.current += 1;
+    if (moveCountRef.current === 1 && deltaY < 0) {
+      //如果不是下拉置为 false
+      pullingRef.current = false;
+      return;
+    }
+    if (!pullingRef.current) return;
+    setTranslateY(translateY + deltaY);
+    lastYPosRef.current = e.touches[0].clientY;
+  };
+  const onTouchEnd: TouchEventHandler = e => {
+    setTranslateY(0);
+  };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
     // 整个区域滚动的高度
@@ -114,9 +149,15 @@ const Scroll: React.FunctionComponent<Props> = props => {
     <div className={sc('')} {...rest}>
       <div
         className={sc('inner')}
-        style={{ right: -scrollbarWidth() }}
+        style={{
+          right: -scrollbarWidth(),
+          transform: `translateY(${translateY}px)`,
+        }}
         onScroll={onScroll}
         ref={containerRef}
+        onTouchMove={onTouchMove}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {children}
       </div>
