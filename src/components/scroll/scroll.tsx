@@ -13,6 +13,7 @@ import { scrollbarWidth } from '@/components/scroll/scrollbarWidth';
 import { CSSTransition } from 'react-transition-group';
 
 const sc = scopedClassMaker('gulu-scroll');
+
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const Scroll: React.FunctionComponent<Props> = props => {
@@ -77,6 +78,17 @@ const Scroll: React.FunctionComponent<Props> = props => {
       e.preventDefault();
     }
   };
+  const onMouseOverTrack: MouseEventHandler = e => {
+    setBarVisible(true);
+  };
+  const onMouseOutTrack: MouseEventHandler = e => {
+    if (timeIdRef.current !== null) {
+      window.clearTimeout(timeIdRef.current);
+    }
+    timeIdRef.current = window.setTimeout(() => {
+      setBarVisible(false);
+    }, 500);
+  };
   useEffect(() => {
     // mounted 挂载的时候计算滚动条的高度
     // 整个区域滚动的高度
@@ -97,7 +109,7 @@ const Scroll: React.FunctionComponent<Props> = props => {
       document.removeEventListener('selectstart', onSelect);
     };
   }, []);
-  console.log(barVisible);
+
   return (
     <div className={sc('')} {...rest}>
       <div
@@ -108,13 +120,17 @@ const Scroll: React.FunctionComponent<Props> = props => {
       >
         {children}
       </div>
-      <CSSTransition
-        in={barVisible}
-        timeout={300}
-        unmountOnExit={true}
-        classNames={'fade'}
+      <div
+        className={sc('track')}
+        onMouseOver={onMouseOverTrack}
+        onMouseOut={onMouseOutTrack}
       >
-        <div className={sc('track')}>
+        <CSSTransition
+          in={barVisible}
+          timeout={300}
+          unmountOnExit={true}
+          classNames={'fade'}
+        >
           <div
             className={sc('bar')}
             style={{
@@ -123,8 +139,8 @@ const Scroll: React.FunctionComponent<Props> = props => {
             }}
             onMouseDown={onMouseDownBar}
           />
-        </div>
-      </CSSTransition>
+        </CSSTransition>
+      </div>
     </div>
   );
 };
