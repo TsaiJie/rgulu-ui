@@ -1,0 +1,36 @@
+.gulu-tree {
+  &-item {
+    outline: 1px solid;
+    line-height: 1.5;
+  }
+  &-text {
+    &:hover {
+      background: #0d92ff;
+    }
+  }
+  &-depth-1 {
+    .gulu-tree-text {
+      padding-left: 0;
+    }
+  }
+  &-depth-2 {
+    .gulu-tree-text {
+      padding-left: 1em;
+    }
+  }
+  &-depth-3 {
+    .gulu-tree-text {
+      padding-left: 2em;
+    }
+  }
+  &-depth-4 {
+    .gulu-tree-text {
+      padding-left: 3em;
+    }
+  }
+  &-depth-5 {
+    .gulu-tree-text {
+      padding-left: 4em;
+    }
+  }
+}

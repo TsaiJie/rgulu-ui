@@ -18,7 +18,7 @@ export { noError } from './components/form/validator';
 export { default as Input } from './components/input/input';
 export { default as Scroll } from './components/scroll/scroll';
 export { default as Tree } from './components/tree/tree';
-
+export { SourceDataItem } from './components/tree/tree';
 import './components/variable.scss';
 import './components/mixin.scss';
 import './components/animation.scss';

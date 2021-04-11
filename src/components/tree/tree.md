@@ -2,7 +2,7 @@
 
 ```tsx
 import React, { useState } from 'react';
-import { Tree } from 'rgulu-ui';
+import { Tree, SourceDataItem } from 'rgulu-ui';
 
 export default () => {
   const [array, setArray] = useState([
@@ -30,9 +30,22 @@ export default () => {
       ],
     },
   ]);
+  const [selectedValues, setSelectedValues] = useState(['1.1.1', '1.1.2']);
+  const onChange = (item: SourceDataItem, bool: boolean) => {
+    console.log(item, bool);
+    if (bool) {
+      setSelectedValues([...selectedValues, item.value]);
+    } else {
+      setSelectedValues(selectedValues.filter(value => value !== item.value));
+    }
+  };
   return (
     <div>
-      <Tree sourceData={array} />
+      <Tree
+        sourceData={array}
+        onChange={onChange}
+        selectedValues={selectedValues}
+      />
     </div>
   );
 };

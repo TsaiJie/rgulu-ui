@@ -1,7 +1,8 @@
 import React from 'react';
 import { scopedClassMaker } from '@/helper/classes';
 import './tree.scss';
-interface SourceDataItem {
+
+export interface SourceDataItem {
   text: string;
   value: string;
   children?: SourceDataItem[];
@@ -9,33 +10,43 @@ interface SourceDataItem {
 
 interface Props {
   sourceData: SourceDataItem[];
+  selectedValues: string[];
+  onChange: (item: SourceDataItem, bool: boolean) => void;
 }
 
 const sc = scopedClassMaker('gulu-tree');
-const renderItem = (item: SourceDataItem, depth: number = 1) => {
+const renderItem = (
+  item: SourceDataItem,
+  selectedValues: string[],
+  onChange: (item: SourceDataItem, bool: boolean) => void,
+  depth: number = 1,
+) => {
   const classes = {
     ['depth-' + depth]: true,
     item: true,
   };
   return (
-    <div
-      key={item.text}
-      style={{ paddingLeft: (depth - 1) * 10 + 'px' }}
-      className={sc(classes)}
-    >
-      {item.text}
+    <div key={item.text} className={sc(classes)}>
+      <div className={sc('text')}>
+        <input
+          type="checkbox"
+          checked={selectedValues.indexOf(item.value) >= 0}
+          onChange={e => onChange(item, e.target.checked)}
+        />
+        {item.text}
+      </div>
       {item.children?.map(sub => {
-        return renderItem(sub, depth + 1);
+        return renderItem(sub, selectedValues, onChange, depth + 1);
       })}
     </div>
   );
 };
 const Tree: React.FC<Props> = props => {
-  const { sourceData } = props;
+  const { sourceData, selectedValues, onChange } = props;
   return (
     <div>
       {sourceData.map(item => {
-        return renderItem(item);
+        return renderItem(item, selectedValues, onChange);
       })}
     </div>
   );
